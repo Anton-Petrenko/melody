@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* https://colorhunt.co/palette/ebe4d1b4b4b326577ce55604 */
+:root {
+  --foreground-rgb: 38, 87, 124;
+  --background-rgb: 235, 228, 209;
+}
+
+/* https://colorhunt.co/palette/20262e913175cd5888e9e8e8 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-rgb: 18, 18, 18;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+h1 {
+  font-weight: 800;
+  font-size: 6rem/* 96px */;
+  line-height: 1;
+}
+
+h2 {
+  font-weight: 300;
+  font-size: 1.875rem/* 30px */;
+  line-height: 2.25rem/* 36px */;
+}
