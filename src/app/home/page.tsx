@@ -1,21 +1,23 @@
-'use client';
+import { signOut } from "next-auth/react";
+import { getAuthSession } from "../utils/server";
+import { redirect } from "next/navigation";
+import { getTopItems } from "../api/getTopTracks";
 
-import { signOut, useSession } from "next-auth/react";
-import getProfile from "../api/getTopSongs";
-import { getToken } from "next-auth/jwt";
+export default async function Feed(){
 
-export default function Feed(){
+    const session = await getAuthSession();
 
-    const session = useSession();
-    const test = getProfile(session?.data?.accessToken);
-    // session?.data?.accessToken will get the access token
+    if(!session) {
+        redirect("/");
+    }
+
+    const topTracks = (await getTopItems(session).then((data) => data.items));
 
     return (
         <>
-            <button onClick={() => signOut({callbackUrl: "/"})}>Sign out</button>
-            <p>Testing {session?.data?.user?.name}</p>
-            <p>User is {session.status}</p>
-            <p>{session?.data?.accessToken}</p>
+            {topTracks.map((track: any) => (
+                <p key={track.name}>{track.name}</p>
+            ))}
         </>
     )
 }
