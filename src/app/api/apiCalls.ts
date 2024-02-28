@@ -14,5 +14,9 @@ const useAPI = async (url: string, session: any) => {
 }
 
 export const getTopItems = async (session: any) => {
-    return useAPI("https://api.spotify.com/v1/me/top/tracks", session)
+    return useAPI("https://api.spotify.com/v1/me/top/tracks", session);
+}
+
+export const getProfile = async (session: any) => {
+    return useAPI("https://api.spotify.com/v1/me", session);
 }

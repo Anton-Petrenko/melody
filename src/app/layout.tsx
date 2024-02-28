@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import { SessionProvider } from "@/app/components/sessionProvider";
 import { Red_Hat_Text } from "next/font/google";
 import { getServerSession } from "next-auth";
+import { Providers } from "./providers";
+import type { Metadata } from "next";
 import "./globals.css";
-import { SessionProvider } from "@/app/components/sessionProvider";
 
 
 
@@ -19,9 +20,11 @@ export default async function RootLayout({ children, }: Readonly<{ children: Rea
 
   return (
     <SessionProvider session={session}>
-      <html lang="en">
+      <html lang="en" className="dark">
         <body className={lexend_deca.className}>
-              {children}
+          <Providers>
+            {children}
+          </Providers>
         </body>
       </html>
     </SessionProvider>

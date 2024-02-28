@@ -5,14 +5,13 @@ import { signIn } from "next-auth/react";
 
 export function SpotifySignInButton() {
     const handleClick = () => {
-        
         signIn("spotify", { callbackUrl: 'http://localhost:3000/home' });
     }
 
     return (
         <button 
             onClick={handleClick}
-            className="w-64 h-14 rounded-xl flex justify-center items-center gap-4 text-gray-300 hover:text-white backdrop-blur-lg backdrop-brightness-150 hover:border-2">
+            className="w-64 h-14 rounded-xl flex justify-center items-center gap-4 text-gray-300 hover:text-white backdrop-blur-lg backdrop-brightness-150">
             <Image
                 src="/spotifyLogo.png"
                 alt="Spotify Logo"
