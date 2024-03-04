@@ -19,7 +19,7 @@ export async function NavBar() {
     return (        
     <div className="min-w-[100vh] h-20 bg-[#070707] flex items-center justify-between px-4">
         <div className="w-1/4">
-            <Link href="/">
+            <a href="/">
                 <Image
                     src="/melody.png"
                     alt="Melody logo"
@@ -27,9 +27,12 @@ export async function NavBar() {
                     height={131}
                     className="w-10 h-10"
                 />
-            </Link>
+            </a>
         </div>
         <div className="w-1/4 flex justify-between items-center">
+            <Link 
+                key="Feed"
+                href="/home/feed">
                 <Image
                     src="/home.png"
                     alt="Home feed icon"
@@ -37,6 +40,7 @@ export async function NavBar() {
                     height={96}
                     className="w-8 h-8"
                 />
+            </Link>
             <Image
                 src="/search.png"
                 alt="Search icon"
@@ -44,27 +48,39 @@ export async function NavBar() {
                 height={92}
                 className="w-8 h-8"
             />
-            <Image
-                src="/thumbs.png"
-                alt="For you page icon"
-                width={135}
-                height={135}
-                className="w-10 h-10"
-            />
-            <Image
-                src="/bell.png"
-                alt="Notifications icon"
-                width={71}
-                height={71}
-                className="w-8 h-8"
-            />
-            <Image
-                src="/chat.png"
-                alt="Messages icon"
-                width={80}
-                height={80}
-                className="w-8 h-8"
-            />
+            <Link
+                key="Home"
+                href="/home">
+                <Image
+                    src="/thumbs.png"
+                    alt="For you page icon"
+                    width={135}
+                    height={135}
+                    className="w-10 h-10"
+                />
+            </Link>
+            <Link
+                key="Notifications"
+                href="/home/notifications">
+                <Image
+                    src="/bell.png"
+                    alt="Notifications icon"
+                    width={71}
+                    height={71}
+                    className="w-8 h-8"
+                />
+            </Link>
+            <Link
+                key="Messages"
+                href="/home/messages">
+                <Image
+                    src="/chat.png"
+                    alt="Messages icon"
+                    width={80}
+                    height={80}
+                    className="w-8 h-8"
+                />
+            </Link>
         </div>
         <div className="w-1/4 flex justify-end">
             <NavBarProfile image_url={image_url}/>

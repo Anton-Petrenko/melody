@@ -17,9 +17,9 @@ export default async function Feed(){
     
         return (
             <>
-                {topTracks.map((track) => (
+                {/* {topTracks.map((track) => (
                     <p key={track.id}>{track.name} by {track.artists.map((artist) => <i key={artist.id}>{artist.name}, </i>)}</p>
-                ))}
+                ))} */}
             </>
         )
     }

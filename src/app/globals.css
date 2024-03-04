@@ -38,3 +38,8 @@ h2 {
   font-size: 1.875rem/* 30px */;
   line-height: 2.25rem/* 36px */;
 }
+
+.splash {
+  background-image: url("../../public/splash.jpg");
+  background-size: cover;
+}

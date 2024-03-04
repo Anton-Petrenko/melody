@@ -15,7 +15,7 @@ export default function NavBarProfile( { image_url }: {image_url: string} ) {
                 <DropdownMenu 
                     aria-label="Profile options"
                 >
-                    <DropdownItem key="test" onClick={() => signOut({ callbackUrl: "/" })}>Sign out</DropdownItem>
+                    <DropdownItem key="signOut" onClick={() => signOut({ callbackUrl: "/" })}>Sign out</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
         </>
