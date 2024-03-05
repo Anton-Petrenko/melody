@@ -11,7 +11,7 @@ export function SpotifySignInButton() {
     return (
         <button 
             onClick={handleClick}
-            className="w-64 h-14 rounded-xl flex justify-center items-center gap-4 text-gray-300 hover:text-white backdrop-blur-lg backdrop-brightness-150">
+            className="w-64 h-14 rounded-xl flex justify-center items-center gap-4 text-gray-300 hover:text-white bg-slate-950">
             <Image
                 src="/spotifyLogo.png"
                 alt="Spotify Logo"

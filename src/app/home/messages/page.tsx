@@ -1,4 +1,4 @@
-export default function Feed(){
+export default function Messages(){
     return (
         <>
             <p>Messages</p>

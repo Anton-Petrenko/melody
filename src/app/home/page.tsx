@@ -1,8 +1,8 @@
-import { signOut } from "next-auth/react";
 import { getAuthSession } from "../utils/server";
 import { redirect } from "next/navigation";
 import { getTopItems, getProfile } from "../api/apiCalls";
 import { Track } from "../types/types";
+import TabsHome from "../components/home/filterTabs";
 
 export default async function Feed(){
 
@@ -16,11 +16,16 @@ export default async function Feed(){
         const topTracks = (await getTopItems(session).then((data) => data.items)) as Track[];
     
         return (
-            <>
-                {/* {topTracks.map((track) => (
-                    <p key={track.id}>{track.name} by {track.artists.map((artist) => <i key={artist.id}>{artist.name}, </i>)}</p>
-                ))} */}
-            </>
+            <div className="flex flex-col items-center justify-start gap-3 w-[100%] h-[90dvh] pt-3">
+                <TabsHome/>
+                <div className="overflow-y-auto overflow-x-hidden no-scrollbar">
+                {topTracks.map((track) => (
+                    <div key={track.id} className="w-[68vw] sm:w-[27rem] h-[10rem] bg-neutral-900 rounded-lg my-2">
+                        
+                    </div>
+                ))}
+                </div>
+            </div>
         )
     }
     catch(e) {
