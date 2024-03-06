@@ -50,6 +50,11 @@ h2 {
   line-height: 2.25rem/* 36px */;
 }
 
+h3 {
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
 .splash {
   background-image: url("../../public/splash.jpg");
   background-size: cover;
