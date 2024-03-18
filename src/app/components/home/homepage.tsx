@@ -13,7 +13,7 @@ export default function Homepage( { topTracks, topArtists } : { topTracks: Track
                 <Tab key="Home" title="Songs" className="overflow-x-hidden overflow-y-scroll no-scrollbar">
                     <div>
                         {topTracks.map((track) => (
-                            <div key={track.id} className="w-[68vw] sm:w-[27rem] h-[10rem] bg-neutral-900/75 rounded-lg my-2 flex items-center p-5 gap-3">
+                            <div key={track.id} className="w-[90vw] sm:w-[27rem] h-[10rem] bg-neutral-900/75 rounded-lg my-2 flex items-center p-5 gap-3">
                                 <Image
                                     src={track.album.images[0].url}
                                     alt={track.name}
