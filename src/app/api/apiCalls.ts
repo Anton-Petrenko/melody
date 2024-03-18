@@ -1,4 +1,4 @@
-const useAPI = async (url: string, session: any) => {
+const spotifyAPI = async (url: string, session: any) => {
 
     if(!session){
         return null;
@@ -14,13 +14,13 @@ const useAPI = async (url: string, session: any) => {
 }
 
 export const getTopTracks = async (session: any) => {
-    return useAPI("https://api.spotify.com/v1/me/top/tracks?time_range=short_term", session);
+    return spotifyAPI("https://api.spotify.com/v1/me/top/tracks?time_range=short_term", session);
 }
 
 export const getTopArtists = async (session: any) => {
-    return useAPI("https://api.spotify.com/v1/me/top/artists?time_range=short_term", session);
+    return spotifyAPI("https://api.spotify.com/v1/me/top/artists?time_range=short_term", session);
 }
 
 export const getProfile = async (session: any) => {
-    return useAPI("https://api.spotify.com/v1/me", session);
+    return spotifyAPI("https://api.spotify.com/v1/me", session);
 }

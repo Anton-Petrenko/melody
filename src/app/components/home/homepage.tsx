@@ -41,7 +41,7 @@ export default function Homepage( { topTracks, topArtists } : { topTracks: Track
                                     className="h-auto w-24 object-center rounded-md"
                                 />
                                 <div className="w-[100%] h-[100%] flex flex-col justify-center">
-                                    <h3 className="line-clamp-2">{artist.name}</h3>
+                                    <h3 className="line-clamp-1">{artist.name}</h3>
                                     <p className="opacity-50">{artist.followers?.total.toLocaleString()} followers</p>
                                 </div>
                             </div>
