@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react";
 
 export function SpotifySignInButton() {
     const handleClick = () => {
-        signIn("spotify", { callbackUrl: 'http://localhost:3000/home' });
+        signIn("spotify", { callbackUrl: 'https://melody-kappa-five.vercel.app/home' });
     }
 
     return (
