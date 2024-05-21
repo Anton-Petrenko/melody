@@ -31,6 +31,7 @@ export default function Home(
     }, [])
 
     return (
+        <Suspense>
             <div className="w-full sm:w-[30rem] flex flex-col items-center gap-2">
                 {
                     search ?
@@ -43,5 +44,6 @@ export default function Home(
                     <p className="h-full flex items-center">Search something!</p>
                 }
             </div>
+        </Suspense>
     )
 }
