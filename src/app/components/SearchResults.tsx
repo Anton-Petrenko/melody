@@ -1,5 +1,5 @@
+import { Suspense } from "react";
 import TrackCard from "./TrackCard";
-import { CgSmileSad } from "react-icons/cg";
 import { TrackSearchResult } from "../types/types";
 import { searchSpotify } from "../utils/SpotifyAPICalls";
 
@@ -20,19 +20,21 @@ export default async function SearchResults(
                 <h3>Search</h3>
                 <p className="opacity-50 text-xs">Some previews may be unavailable when searching.</p>
             </div>
-            {
-                searchResults.tracks.items.length > 0 ?
-                searchResults.tracks.items.map((track) => (
-                    <TrackCard
-                        key={track.id}
-                        track={track}
-                    />
-                ))
-                :
-                <div className="h-full flex items-center text-center">
-                    <p className="opacity-70">No results found...</p>
-                </div>
-            }
+            <Suspense>
+                {
+                    searchResults.tracks.items.length > 0 ?
+                    searchResults.tracks.items.map((track) => (
+                        <TrackCard
+                            key={track.id}
+                            track={track}
+                        />
+                    ))
+                    :
+                    <div className="h-full flex items-center text-center">
+                        <p className="opacity-70">No results found...</p>
+                    </div>
+                }       
+            </Suspense>
         </>
     )
 

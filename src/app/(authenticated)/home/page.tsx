@@ -31,19 +31,17 @@ export default function Home(
     }, [])
 
     return (
-        <Suspense>
-            <div className="w-full sm:w-[30rem] flex flex-col items-center gap-2">
-                {
-                    search ?
-                    <Suspense fallback={<Spinner color="default" className="h-full"/>}>
-                        <SearchResults
-                            search={search}
-                        />
-                    </Suspense>
-                    :
-                    <p className="h-full flex items-center">Search something!</p>
-                }
-            </div>
-        </Suspense>
+        <div className="w-full sm:w-[30rem] flex flex-col items-center gap-2">
+            {
+                search ?
+                <Suspense fallback={<Spinner color="default" className="h-full"/>}>
+                    <SearchResults
+                        search={search}
+                    />
+                </Suspense>
+                :
+                <p className="h-full flex items-center">Search something!</p>
+            }
+        </div>
     )
 }
