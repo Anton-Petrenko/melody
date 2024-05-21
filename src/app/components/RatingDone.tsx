@@ -14,7 +14,7 @@ export default function RatingDone(
 ) {
     return (
         <>
-            <h3>It's official!</h3>
+            <h3>{`It's official!`}</h3>
         </>
     )
 }

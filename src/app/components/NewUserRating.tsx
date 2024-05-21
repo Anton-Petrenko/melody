@@ -15,8 +15,8 @@ export default function NewUserRating() {
                 />
             </div>
             <p>Your first song is in your list!</p>
-            <p>Since it's the only song in your list, it will be scored a 10/10</p>
-            <p>Don't worry - the ratings update each time you add a song!</p>
+            <p>{`Since it's the only song in your list, it will be scored a 10/10`}</p>
+            <p>{`Don't worry - the ratings update each time you add a song!`}</p>
         </> 
     )
 }
