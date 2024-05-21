@@ -2,6 +2,7 @@ import "../globals.css";
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import AudioProvider from "../providers/AudioProvider";
+import SearchProvider from "../providers/SearchProvider";
 import RatingProvider from "../providers/RatingProvider";
 import SessionProvider from "@/app/providers/SessionProvider";
 import NextUIProviderWrapper from "../providers/NextUIProvider";
@@ -23,9 +24,11 @@ export default async function RootLayout({ children, }: Readonly<{ children: Rea
           <body className={manrope.className}>
             <NextUIProviderWrapper>
               <UserDBInfoProvider>
-                <RatingProvider>
-                  {children}
-                </RatingProvider>
+                <SearchProvider>
+                  <RatingProvider>
+                    {children}
+                  </RatingProvider>
+                </SearchProvider>
               </UserDBInfoProvider>
             </NextUIProviderWrapper>
           </body>

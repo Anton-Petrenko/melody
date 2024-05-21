@@ -78,3 +78,8 @@ export interface RatingProviderState {
 export interface UserDBState {
     dbID: number
 }
+
+export interface SearchState {
+    term: string,
+    setSearch: Dispatch<SetStateAction<string>>
+}
