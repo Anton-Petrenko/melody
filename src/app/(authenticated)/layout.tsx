@@ -21,6 +21,9 @@ export default async function RootLayout({ children, }: Readonly<{ children: Rea
     <SessionProvider>
       <AudioProvider>
         <html lang="en" className="dark">
+          <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"></meta>
+          </head>
           <body className={manrope.className}>
             <NextUIProviderWrapper>
               <UserDBInfoProvider>

@@ -90,7 +90,7 @@ export default function RatingProvider({ children, }: Readonly<{ children: React
         if (left_ == Math.floor((left_ + right_) / 2) && left_ == right_ - 1) {
             // done rating
             var indexToInsert = Math.floor((left_ + right_) / 2);
-            if (left_ != -1) {indexToInsert++}
+            if (left_ != -1) {indexToInsert++} else {indexToInsert = 0}
             await addSongAtIndex(songToRate as Track, userDBInfo.dbID, indexToInsert);
             setRatedSongs([
                 ...ratedSongs.slice(0, indexToInsert),
