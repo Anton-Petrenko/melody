@@ -24,6 +24,7 @@ export default async function SearchResults(
                 searchResults.tracks.items.length > 0 ?
                 searchResults.tracks.items.map((track) => (
                     <TrackCard
+                        key={track.id}
                         track={track}
                     />
                 ))
