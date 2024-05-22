@@ -38,7 +38,7 @@ export default function TrackCardRating(
                         track={track}
                     />
                 </div>
-                <div className="absolute top-0 left-0 w-[88%] h-full" onClick={() => serveNew(higher)}></div>
+                <div className="absolute top-0 left-0 sm:w-[88%] w-[80%] h-full" onClick={() => serveNew(higher)}></div>
             </div>
         </>
     )

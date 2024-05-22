@@ -1,8 +1,8 @@
 'use server';
 
-import { Track, User } from "../types/types";
-import { getProfile } from "./SpotifyAPICalls";
+import { Post, Track, User } from "../types/types";
 import { sql, QueryResult } from "@vercel/postgres";
+import { getProfile, getSongByID } from "./SpotifyAPICalls";
 
 export async function syncLoginWithDB() {
     // this can probably be morphed into one sql query
@@ -12,10 +12,10 @@ export async function syncLoginWithDB() {
         if (rows.at(0)) {
             await sql`UPDATE users SET last_logged = ${new Date().toISOString()} WHERE api_id=${userSpotifyProfile.id};`
         } else {
-            await sql`INSERT INTO users (api_id, last_logged) VALUES (${userSpotifyProfile.id}, ${new Date().toISOString()});`
+            await sql`INSERT INTO users (api_id, last_logged, photo) VALUES (${userSpotifyProfile.id}, ${new Date().toISOString()}, ${userSpotifyProfile.images.at(0)?.url});`
+            await sql`INSERT INTO followers (user_id, following) VALUES (${userSpotifyProfile.id}, ARRAY[${userSpotifyProfile.id}]);`
         }
     }
-
 }
 
 export async function getUserDBID() {
@@ -49,4 +49,21 @@ export async function addSong(song: Track, dbID: number) {
 
 export async function addSongAtIndex(song: Track, dbID: number, index: number) {
     await sql`UPDATE song_rankings SET rankings = rankings[:${index}]||${song.id}::text||rankings[${index+1}:] WHERE user_db_id = ${dbID};`;
+}
+
+export async function uploadRatingPostToDB(dbID: number, songID: string, content: string, position: number, rating: string) {
+    await sql`INSERT INTO posts (user_id, date, type, content, song_id, rating_pos, rating_score) VALUES (${dbID}, ${new Date().toISOString()}, 'rating', ${content}, ${songID}, ${position}, ${rating});`;
+}
+
+export async function getPosts(dbID: number, numPosts: number = 20, offset: number = 0) {
+    var idToTrack = {} as any;
+    const { rows }: { rows: Post[]} = await sql`SELECT p.*, u.photo, u.api_id
+    FROM posts p
+    JOIN followers f ON p.user_id = ANY(f.following)
+    JOIN users u ON p.user_id = u.db_id
+    WHERE f.user_id = ${dbID}
+    ORDER BY p.date DESC
+    LIMIT ${numPosts}
+    OFFSET ${offset};` as QueryResult;
+    return rows;
 }

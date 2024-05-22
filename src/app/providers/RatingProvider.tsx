@@ -97,7 +97,6 @@ export default function RatingProvider({ children, }: Readonly<{ children: React
                 songToRate?.id as string,
                 ...ratedSongs.slice(indexToInsert)
             ])
-            alert("inserting at" + indexToInsert);
             setPostScreen(true);
         }
         else {
@@ -125,7 +124,7 @@ export default function RatingProvider({ children, }: Readonly<{ children: React
                         onClick={() => setSongToRate(null)}>
                     </div>
                     <Card className="w-[95%] sm:w-[35rem]">
-                        <CardBody className="flex flex-col gap-4 sm:px-10 px-4 py-8 items-center justify-center relative text-center">
+                        <CardBody className="flex flex-col gap-2 sm:px-10 px-4 py-8 items-center justify-center relative text-center">
                             <IoMdClose 
                                 className="absolute right-2 top-2 cursor-pointer"
                                 size={20} 

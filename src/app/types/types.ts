@@ -83,3 +83,17 @@ export interface SearchState {
     term: string,
     setSearch: Dispatch<SetStateAction<string>>
 }
+
+export interface Post {
+    post_id: number,
+    user_id: number,
+    date: string,
+    type: string,
+    content: string | null,
+    song_id: string | null,
+    song_id_info: Track,
+    photo: string | null,
+    api_id: string,
+    rating_pos: number,
+    rating_score: string
+}
