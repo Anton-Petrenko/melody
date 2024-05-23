@@ -3,7 +3,7 @@
 import { Suspense } from "react";
 import HomePage from "@/app/components/HomePage";
 import { Post, Track } from "@/app/types/types";
-import { getPosts, getUserDBID } from "@/app/utils/DatabaseCalls";
+import { getPosts, getUserDBID, syncLoginWithDB } from "@/app/utils/DatabaseCalls";
 import { getSongByID } from "@/app/utils/SpotifyAPICalls";
 
 export default async function Home({
@@ -14,6 +14,7 @@ export default async function Home({
     };
   }) {
 
+    (await syncLoginWithDB());
     const dbID = await getUserDBID();
     const posts = await getPosts(dbID);
     const getSongData = async (id: string) => {
