@@ -8,6 +8,7 @@ import SessionProvider from "@/app/providers/SessionProvider";
 import NextUIProviderWrapper from "../providers/NextUIProvider";
 import UserDBInfoProvider from "../providers/UserDBInfoProvider";
 import NavBar from "../components/NavBar";
+import { syncLoginWithDB } from "../utils/DatabaseCalls";
 
 const manrope = Manrope({ subsets: ["latin"], weight: ["200", "300", "400", "500", "600", "700", "800"] });
 
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
+  (await syncLoginWithDB());
   // can probably morph all providers into one provider?
   return (
     <SessionProvider>
