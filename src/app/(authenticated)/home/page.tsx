@@ -1,11 +1,18 @@
 'use server'
 
+import { Suspense } from "react";
 import HomePage from "@/app/components/HomePage";
 import { Post, Track } from "@/app/types/types";
 import { getPosts, getUserDBID } from "@/app/utils/DatabaseCalls";
 import { getSongByID } from "@/app/utils/SpotifyAPICalls";
 
-export default async function Home() {
+export default async function Home({
+    searchParams,
+  }: {
+    searchParams?: {
+      search?: string;
+    };
+  }) {
 
     const dbID = await getUserDBID();
     const posts = await getPosts(dbID);
@@ -22,8 +29,9 @@ export default async function Home() {
     const postsFilled = await Promise.all(promises) as Post[];
 
     return (
-        <HomePage
-            posts={postsFilled}
-        />
+      <HomePage
+          searchParams={searchParams}
+          posts={postsFilled}
+      />
     )
 }

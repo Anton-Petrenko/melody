@@ -5,6 +5,7 @@ import SearchBar from "./SearchBar";
 import MelodyLogo from "../images/Melody";
 import AvatarButton from "./AvatarButton";
 import { Link, Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/react";
+import { Suspense } from "react";
 
 export default function NavBar({ children, }: Readonly<{ children: React.ReactNode; }>){
     return (
@@ -60,12 +61,16 @@ export default function NavBar({ children, }: Readonly<{ children: React.ReactNo
                         </Link>
                     </NavbarItem>
                     <NavbarItem>
-                        <SearchBar/>
+                        <Suspense>
+                            <SearchBar/>
+                        </Suspense>
                     </NavbarItem>
                 </NavbarContent>
                 <NavbarContent justify='center' className="sm:hidden flex gap-14">
                     <NavbarItem>
-                        <SearchBar/>
+                        <Suspense>
+                            <SearchBar/>
+                        </Suspense>
                     </NavbarItem>
                 </NavbarContent>
                 <NavbarContent justify='end'>

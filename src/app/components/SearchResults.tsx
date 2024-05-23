@@ -7,12 +7,14 @@ import { Spinner } from "@nextui-org/react";
 
 export default async function SearchResults(
     {
-        searchResults
+        search
     }:
     {
-        searchResults: TrackSearchResult | null
+        search: string
     }
 ) {
+
+    const searchResults = await searchSpotify(search) as TrackSearchResult;
 
     return (
         <>
