@@ -20,6 +20,7 @@ export async function syncLoginWithDB() {
 
 export async function getUserDBID() {
     const userSpotifyProfile = await getProfile() as User;
+    console.log(JSON.stringify(userSpotifyProfile));
     if (userSpotifyProfile.id) {
         const { rows, fields } = (await sql`SELECT * FROM users WHERE api_id=${userSpotifyProfile.id};`) as QueryResult;
         return rows.at(0).db_id

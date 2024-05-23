@@ -27,6 +27,9 @@ export default function DisplayPost(
                     <b>{post.api_id}</b>
                     <small className="opacity-50">{`@rater${post.user_id}`}</small>
                 </div>
+                <div className="w-full text-right">
+                    {/* <p>FUTURE DATE SPOT</p> */}
+                </div>
             </div>
             <TrackCardFeed 
                 post={post}

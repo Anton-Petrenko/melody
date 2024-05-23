@@ -28,7 +28,7 @@ export default function TrackCardFeed(
     return (
         <>
             <small className="w-full opacity-50">Rated this song at #{post.rating_pos}</small>
-            <div className="bg-[#252525] w-full h-[5rem] rounded-lg flex flex-row gap-2 p-2 relative">
+            <div className="bg-[#252525] w-full h-[5rem] sm:h-[4.5rem] rounded-lg flex flex-row gap-2 p-2 relative">
                 <div className="w-[3rem] h-full items-center justify-center flex">
                     <Image 
                         src={post.song_id_info?.album.images.at(0)?.url as string}
@@ -39,12 +39,11 @@ export default function TrackCardFeed(
                     />
                 </div>
                 <div className="h-full flex flex-col w-[50%] sm:w-[70%] justify-center">
-                    <small className="opacity-50 text-ellipsis line-clamp-1 text-xs">{post.song_id_info.artists.map(artist => artist.name).join(", ")}</small>
+                    <small className="opacity-50 text-ellipsis line-clamp-1 text-xs">{post.song_id_info.artists.at(0)?.name}</small>
                     <p className="text-ellipsis line-clamp-2 text-sm sm:text-medium sm:line-clamp-1">{post.song_id_info.name}</p>
                 </div>
                 <div className="flex items-center justify-end sm:justify-center w-[30%] sm:w-[20%] gap-4">
-                    <h5 className={`font bold ${color}`}>{post.rating_score}</h5>
-                    {/* <h5 className={`font bold text-yellow-500`}>{post.rating_score}</h5> */}
+                    <h5 className={`font-bold ${color}`}>{post.rating_score}</h5>
                     <PlayButton 
                         track={post.song_id_info}
                     /> 

@@ -87,7 +87,7 @@ export interface SearchState {
 export interface Post {
     post_id: number,
     user_id: number,
-    date: string,
+    date: Date,
     type: string,
     content: string | null,
     song_id: string | null,
