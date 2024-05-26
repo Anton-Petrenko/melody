@@ -46,3 +46,23 @@ export const getSongByID = async (id: string) => {
     const session = await getAuthSession();
     return spotifyAPI(`https://api.spotify.com/v1/tracks/${id}`, session);
 }
+
+export const getRecentSongs = async () => {
+    const session = await getAuthSession();
+    return spotifyAPI("https://api.spotify.com/v1/me/player/recently-played", session);
+}
+
+export const getTopTracksMonth = async () => {
+    const session = await getAuthSession();
+    return spotifyAPI('https://api.spotify.com/v1/me/top/tracks?time_range=short_term', session);
+}
+
+export const getTopTracks6Month = async () => {
+    const session = await getAuthSession();
+    return spotifyAPI('https://api.spotify.com/v1/me/top/tracks?time_range=medium_term', session);
+}
+
+export const getTopTracksYear = async () => {
+    const session = await getAuthSession();
+    return spotifyAPI('https://api.spotify.com/v1/me/top/tracks?time_range=long_term', session);
+}

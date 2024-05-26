@@ -3,7 +3,7 @@
 import DisplayPost from "./Post";
 import { Post } from "../types/types";
 
-export default async function HomeFeed(
+export default function HomeFeed(
     {
         posts
     }:

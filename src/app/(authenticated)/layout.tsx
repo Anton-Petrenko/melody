@@ -18,8 +18,6 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
-  (await syncLoginWithDB());
-  // can probably morph all providers into one provider?
   return (
     <SessionProvider>
       <AudioProvider>

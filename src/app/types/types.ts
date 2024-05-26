@@ -97,3 +97,17 @@ export interface Post {
     rating_pos: number,
     rating_score: string
 }
+
+export interface PlayHistory {
+    track: Track,
+    played_at: string
+}
+
+export interface RecentlyPlayedTracks {
+    cursors: {
+        after: string,
+        before: string
+    },
+    next: string,
+    items: PlayHistory[]
+}

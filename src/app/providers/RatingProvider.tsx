@@ -97,7 +97,12 @@ export default function RatingProvider({ children, }: Readonly<{ children: React
                 songToRate?.id as string,
                 ...ratedSongs.slice(indexToInsert)
             ])
-            setPostScreen(true);
+            if (ratedSongs.length >= 10) {
+                setPostScreen(true);
+            }
+            else {
+                setSongToRate(null);
+            }
         }
         else {
             // serve next song

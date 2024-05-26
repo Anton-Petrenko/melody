@@ -13,16 +13,6 @@ export default function TrackCardFeed(
     }
 ) {
 
-    function getColor(rating: number) {
-        if (rating < 4) {
-            return 'red'
-        }
-        if (rating > 6.9) {
-            return 'green'
-        }
-        return 'yellow'
-    }
-
     var color = Number(post.rating_score) < 4 ? "red" : (Number(post.rating_score) > 6.9 ? "green" : "yellow");
 
     return (

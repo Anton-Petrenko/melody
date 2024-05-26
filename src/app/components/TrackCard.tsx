@@ -6,6 +6,7 @@ import PlayButton from "./PlayButton";
 import { Track } from "../types/types";
 import { MdOutlineStar } from "react-icons/md";
 import { RatingContext } from "../providers/RatingProvider";
+import { FaLock } from "react-icons/fa6";
 
 export default function TrackCard(
     {
@@ -17,6 +18,11 @@ export default function TrackCard(
 ) {
 
     const ratingContext = useContext(RatingContext);
+    let color = "";
+    if (ratingContext.ratedSongs.indexOf(track.id) != -1) {
+        const score = (((ratingContext.ratedSongs.indexOf(track.id) + 1) / ratingContext.ratedSongs.length)*10).toFixed(1);
+        color = Number(score) < 4 ? "red" : (Number(score) > 6.9 ? "green" : "yellow");
+    }
 
     return (
         <div className="w-[90%] sm:w-full h-[7rem] sm:h-[9.4rem] bg-[#181818]/50 rounded-xl flex flex-row p-4 gap-4 justify-between">
@@ -42,7 +48,10 @@ export default function TrackCard(
                     />
                     :
                     <div className="absolute bottom-0">
-                        <p>{(((ratingContext.ratedSongs.indexOf(track.id) + 1) / ratingContext.ratedSongs.length)*10).toFixed(1)}</p>
+                        <h5 className={`${color} font-bold`}>{
+                            ratingContext.ratedSongs.length < 10 ? <FaLock size={20}/> :
+                            (((ratingContext.ratedSongs.indexOf(track.id) + 1) / ratingContext.ratedSongs.length)*10).toFixed(1)
+                        }</h5>
                     </div>
                 }
             </div>

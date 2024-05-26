@@ -1,13 +1,17 @@
 'use client'
 
 import Image from "next/image";
+import { Suspense } from "react";
 import SearchBar from "./SearchBar";
 import MelodyLogo from "../images/Melody";
 import AvatarButton from "./AvatarButton";
+import { usePathname } from "next/navigation";
 import { Link, Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/react";
-import { Suspense } from "react";
 
 export default function NavBar({ children, }: Readonly<{ children: React.ReactNode; }>){
+
+    const pathname = usePathname();
+
     return (
         <div className="min-h-screen overflow-hidden">
             <Navbar
@@ -31,6 +35,7 @@ export default function NavBar({ children, }: Readonly<{ children: React.ReactNo
                                 alt="Home Feed Icon"
                                 width={33}
                                 height={33}
+                                className={(pathname == "/home" ? "opacity-100" : "opacity-50 scale-[0.9]")}
                             />
                         </Link>
                     </NavbarItem>
@@ -44,6 +49,7 @@ export default function NavBar({ children, }: Readonly<{ children: React.ReactNo
                                 alt="Rate Songs Icon"
                                 width={30}
                                 height={30}
+                                className={(pathname == "/rate" ? "opacity-100" : "opacity-50 scale-[0.9]")}
                             />
                         </Link>
                     </NavbarItem>
@@ -57,6 +63,7 @@ export default function NavBar({ children, }: Readonly<{ children: React.ReactNo
                                 alt="Notifications Icon"
                                 width={25}
                                 height={25}
+                                className={(pathname == "/notifications" ? "opacity-100" : "opacity-50 scale-[0.9]")}
                             />
                         </Link>
                     </NavbarItem>
@@ -98,6 +105,7 @@ export default function NavBar({ children, }: Readonly<{ children: React.ReactNo
                                 alt="Home Feed Icon"
                                 width={33}
                                 height={33}
+                                className={(pathname == "/home" ? "opacity-100" : "opacity-50")}
                             />
                         </Link>
                     </NavbarItem>
@@ -111,6 +119,7 @@ export default function NavBar({ children, }: Readonly<{ children: React.ReactNo
                                 alt="Rate Songs Icon"
                                 width={30}
                                 height={30}
+                                className={(pathname == "/rate" ? "opacity-100" : "opacity-50")}
                             />
                         </Link>
                     </NavbarItem>
@@ -124,6 +133,7 @@ export default function NavBar({ children, }: Readonly<{ children: React.ReactNo
                                 alt="Notifications Icon"
                                 width={25}
                                 height={25}
+                                className={(pathname == "/notifications" ? "opacity-100" : "opacity-50")}
                             />
                         </Link>
                     </NavbarItem>

@@ -4,8 +4,11 @@ import { useEffect, useState } from "react";
 import { getProfilePhoto } from "../utils/SpotifyAPICalls";
 import { Avatar, Dropdown, DropdownTrigger, DropdownItem, DropdownMenu } from "@nextui-org/react"
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function AvatarButton() {
+
+    const router = useRouter();
 
     const [avatarSrc, setAvatarSrc] = useState("");
 
@@ -22,17 +25,27 @@ export default function AvatarButton() {
                     className="cursor-pointer"
                 />
             </DropdownTrigger>
-            <DropdownMenu>
-                <DropdownItem>Profile</DropdownItem>
-                <DropdownItem 
+            <DropdownMenu
+                onAction={(key) => {
+                    if (key == "Profile") {
+                        router.push("/profile");
+                    } else if (key == "Log Out") {
+                        signOut({ callbackUrl: "/" });
+                    }
+                }}
+            >
+                <DropdownItem
+                    key="Profile"
+                >
+                    Profile
+                </DropdownItem>
+                <DropdownItem
+                    key="Log Out"
                     className="text-danger" 
                     color="danger"
-                    onClick={() => (
-                        signOut({ callbackUrl: "/" })
-                    )}
-                    >
+                >
                         Log Out
-                    </DropdownItem>
+                </DropdownItem>
             </DropdownMenu>
         </Dropdown>
     )

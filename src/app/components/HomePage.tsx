@@ -19,29 +19,6 @@ export default function HomePage (
     }
 ) {
 
-    // const searchContext = useContext(SearchContext);
-    // const [searchResults, setSearchResults] = useState<TrackSearchResult | null>(null);
-
-    // useEffect(() => {
-
-    //     if (searchContext.term == "") {
-    //         setSearchResults(null);
-    //         return
-    //     }
-
-    //     const getData = async () => {
-    //         const results = await searchSpotify(searchContext.term);
-    //         setSearchResults(results);
-    //     }
-
-    //     let timer = setTimeout(() => {
-    //         getData();
-    //     }, 1500)
-
-    //     return () => {clearTimeout(timer); setSearchResults(null)};
-
-    // }, [searchContext.term])
-
     return (
         <div className="w-full sm:w-[30rem] flex flex-col items-center gap-2">
             {
@@ -52,11 +29,9 @@ export default function HomePage (
                     />
                 </Suspense>
                 :
-                <>
-                    <HomeFeed
-                        posts={posts}
-                    />
-                </>
+                <HomeFeed
+                    posts={posts}
+                />
             }
         </div>
     )

@@ -1,28 +1,38 @@
 'use server';
 
 import { Post, Track, User } from "../types/types";
-import { sql, QueryResult } from "@vercel/postgres";
+import { sql, QueryResult, db } from "@vercel/postgres";
 import { getProfile, getSongByID } from "./SpotifyAPICalls";
 
 export async function syncLoginWithDB() {
     // this can probably be morphed into one sql query
-    const userSpotifyProfile = await getProfile() as User;
-    if (userSpotifyProfile.id) {
-        const { rows, fields } = (await sql`SELECT * FROM users WHERE api_id=${userSpotifyProfile.id};`) as QueryResult;
-        if (rows.at(0)) {
-            await sql`UPDATE users SET last_logged = ${new Date().toISOString()} WHERE api_id=${userSpotifyProfile.id};`
-        } else {
-            await sql`INSERT INTO users (api_id, last_logged, photo) VALUES (${userSpotifyProfile.id}, ${new Date().toISOString()}, ${userSpotifyProfile.images.at(0)?.url});`
-            await sql`INSERT INTO followers (user_id, following) VALUES (${userSpotifyProfile.id}, ARRAY[${userSpotifyProfile.id}]);`
+    try {
+        const userSpotifyProfile = await getProfile() as User;
+        if (userSpotifyProfile.id) {
+            const { rows, fields } = (await sql`SELECT * FROM users WHERE api_id=${userSpotifyProfile.id};`) as QueryResult;
+            if (rows.at(0)) {
+                await sql`UPDATE users SET last_logged = ${new Date().toISOString()} WHERE api_id=${userSpotifyProfile.id};`
+            } else {
+                const { rows, fields } = await sql`INSERT INTO users (api_id, last_logged, photo) VALUES (${userSpotifyProfile.id}, ${new Date().toISOString()}, ${userSpotifyProfile.images.at(0)?.url}) RETURNING db_id;` as QueryResult;
+                await sql`INSERT INTO followers (user_id, following) VALUES (${rows.at(0).db_id}, ARRAY[${rows.at(0).db_id}::INTEGER]);`
+            }
         }
+        return "SUCCESS";
+    } catch {
+        return "ERROR";
     }
 }
 
-export async function getUserDBID() {
-    const userSpotifyProfile = await getProfile() as User;
-    console.log(JSON.stringify(userSpotifyProfile));
+export async function getUserDBID(user: User | null = null) {
+    var userSpotifyProfile;
+    if (user == null) {
+        userSpotifyProfile = await getProfile() as User;
+    }
+    else {
+        userSpotifyProfile = user;
+    }
     if (userSpotifyProfile.id) {
-        const { rows, fields } = (await sql`SELECT * FROM users WHERE api_id=${userSpotifyProfile.id};`) as QueryResult;
+        const { rows, fields } = await sql`SELECT * FROM users WHERE api_id=${userSpotifyProfile.id};` as QueryResult;
         return rows.at(0).db_id
     } else {
         return null
