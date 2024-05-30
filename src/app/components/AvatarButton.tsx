@@ -1,14 +1,18 @@
 "use client"
 
-import { useEffect, useState } from "react";
-import { getProfilePhoto } from "../utils/SpotifyAPICalls";
-import { Avatar, Dropdown, DropdownTrigger, DropdownItem, DropdownMenu } from "@nextui-org/react"
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useContext, useEffect, useState } from "react";
+import { getProfilePhoto } from "../utils/SpotifyAPICalls";
+import { UserDBContext } from "../providers/UserDBInfoProvider";
+import { Avatar, Dropdown, DropdownTrigger, DropdownItem, DropdownMenu } from "@nextui-org/react";
+import { AudioContext } from "../providers/AudioProvider";
 
 export default function AvatarButton() {
 
     const router = useRouter();
+    const userContext = useContext(UserDBContext);
+    const audioContext = useContext(AudioContext);
 
     const [avatarSrc, setAvatarSrc] = useState("");
 
@@ -28,7 +32,8 @@ export default function AvatarButton() {
             <DropdownMenu
                 onAction={(key) => {
                     if (key == "Profile") {
-                        router.push("/profile");
+                        audioContext.pause();
+                        router.push(`/profile/${userContext.dbID}`);
                     } else if (key == "Log Out") {
                         signOut({ callbackUrl: "/" });
                     }

@@ -1,16 +1,19 @@
 'use client'
 
+import Link from "next/link";
 import Image from "next/image";
-import { Suspense } from "react";
 import SearchBar from "./SearchBar";
 import MelodyLogo from "../images/Melody";
 import AvatarButton from "./AvatarButton";
+import { Suspense, useContext } from "react";
 import { usePathname } from "next/navigation";
-import { Link, Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/react";
+import { AudioContext } from "../providers/AudioProvider";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/react";
 
 export default function NavBar({ children, }: Readonly<{ children: React.ReactNode; }>){
 
     const pathname = usePathname();
+    const audioContext = useContext(AudioContext);
 
     return (
         <div className="min-h-screen overflow-hidden">
@@ -29,6 +32,7 @@ export default function NavBar({ children, }: Readonly<{ children: React.ReactNo
                         <Link
                             className="cursor-pointer"
                             href='/home'
+                            onClick={() => audioContext.pause()}
                         >
                             <Image
                                 src="/home.png"
@@ -43,6 +47,7 @@ export default function NavBar({ children, }: Readonly<{ children: React.ReactNo
                         <Link
                             className="cursor-pointer"
                             href='/rate'
+                            onClick={() => audioContext.pause()}
                         >
                             <Image
                                 src="/thumbs.png"
@@ -57,6 +62,7 @@ export default function NavBar({ children, }: Readonly<{ children: React.ReactNo
                         <Link
                             className="cursor-pointer"
                             href='/notifications'
+                            onClick={() => audioContext.pause()}
                         >
                             <Image
                                 src="/bell.png"
@@ -99,6 +105,7 @@ export default function NavBar({ children, }: Readonly<{ children: React.ReactNo
                         <Link
                             className="cursor-pointer"
                             href='/home'
+                            onClick={() => audioContext.pause()}
                         >
                             <Image
                                 src="/home.png"
@@ -113,6 +120,7 @@ export default function NavBar({ children, }: Readonly<{ children: React.ReactNo
                         <Link
                             className="cursor-pointer"
                             href='/rate'
+                            onClick={() => audioContext.pause()}
                         >
                             <Image
                                 src="/thumbs.png"
@@ -127,6 +135,7 @@ export default function NavBar({ children, }: Readonly<{ children: React.ReactNo
                         <Link
                             className="cursor-pointer"
                             href='/notifications'
+                            onClick={() => audioContext.pause()}
                         >
                             <Image
                                 src="/bell.png"

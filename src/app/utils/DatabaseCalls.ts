@@ -1,39 +1,42 @@
 'use server';
 
-import { Post, Track, User } from "../types/types";
+import { MelodyUser, Post, Track, User } from "../types/types";
 import { sql, QueryResult, db } from "@vercel/postgres";
 import { getProfile, getSongByID } from "./SpotifyAPICalls";
 
-export async function syncLoginWithDB() {
+export async function syncLoginWithDB(user: User | null = null) {
     // this can probably be morphed into one sql query
-    try {
-        const userSpotifyProfile = await getProfile() as User;
-        if (userSpotifyProfile.id) {
-            const { rows, fields } = (await sql`SELECT * FROM users WHERE api_id=${userSpotifyProfile.id};`) as QueryResult;
-            if (rows.at(0)) {
-                await sql`UPDATE users SET last_logged = ${new Date().toISOString()} WHERE api_id=${userSpotifyProfile.id};`
+    const givenUser = user ? true : false;
+    const userSpotifyProfile = user ? user : await getProfile() as User;
+    if (userSpotifyProfile.id) {
+        const { rows, fields } = (await sql`SELECT * FROM users WHERE api_id=${userSpotifyProfile.id};`) as QueryResult;
+        if (rows.length > 0) {
+            const { rows, fields } =  await sql`UPDATE users SET last_logged = CURRENT_TIMESTAMP WHERE api_id=${userSpotifyProfile.id} RETURNING db_id;` as QueryResult;
+            return rows.at(0).db_id
+        } else {
+            if (givenUser) {
+                const { rows, fields } = await sql`INSERT INTO users (api_id, last_logged, photo) VALUES (${userSpotifyProfile.id}, CURRENT_TIMESTAMP, ${userSpotifyProfile.image}) RETURNING db_id;` as QueryResult;
+                const dbID = rows.at(0).db_id;
+                await sql`UPDATE users SET display_name=${userSpotifyProfile.id}, handle_name=${`rater` + dbID} WHERE db_id=${dbID};`
+                await sql`INSERT INTO followers (user_id, following, followers) VALUES (${rows.at(0).db_id}, ARRAY[${rows.at(0).db_id}::INTEGER], ARRAY[${rows.at(0).db_id}::INTEGER]);`
+                return dbID
             } else {
-                const { rows, fields } = await sql`INSERT INTO users (api_id, last_logged, photo) VALUES (${userSpotifyProfile.id}, ${new Date().toISOString()}, ${userSpotifyProfile.images.at(0)?.url}) RETURNING db_id;` as QueryResult;
-                await sql`INSERT INTO followers (user_id, following) VALUES (${rows.at(0).db_id}, ARRAY[${rows.at(0).db_id}::INTEGER]);`
+                const { rows, fields } = await sql`INSERT INTO users (api_id, last_logged, photo,) VALUES (${userSpotifyProfile.id}, CURRENT_TIMESTAMP, ${userSpotifyProfile.images.at(0)?.url}) RETURNING db_id;` as QueryResult;
+                const dbID = rows.at(0).db_id;
+                await sql`UPDATE users SET display_name=${userSpotifyProfile.id}, handle_name=${`rater` + dbID} WHERE db_id=${dbID};`
+                await sql`INSERT INTO followers (user_id, following, followers) VALUES (${rows.at(0).db_id}, ARRAY[${rows.at(0).db_id}::INTEGER], ARRAY[${rows.at(0).db_id}::INTEGER]);`
+                return dbID
             }
         }
-        return "SUCCESS";
-    } catch {
-        return "ERROR";
     }
+    return null;
 }
 
 export async function getUserDBID(user: User | null = null) {
-    var userSpotifyProfile;
-    if (user == null) {
-        userSpotifyProfile = await getProfile() as User;
-    }
-    else {
-        userSpotifyProfile = user;
-    }
+    const userSpotifyProfile = user ? user : await getProfile() as User;
     if (userSpotifyProfile.id) {
         const { rows, fields } = await sql`SELECT * FROM users WHERE api_id=${userSpotifyProfile.id};` as QueryResult;
-        return rows.at(0).db_id
+        return rows.at(0) as MelodyUser
     } else {
         return null
     }
@@ -42,7 +45,7 @@ export async function getUserDBID(user: User | null = null) {
 export async function getRatedSongs() {
     const dbID = await getUserDBID();
     if (dbID) {
-        const { rows, fields } = (await sql`SELECT rankings FROM song_rankings WHERE user_db_id=${dbID};`) as QueryResult;
+        const { rows, fields } = (await sql`SELECT rankings FROM song_rankings WHERE user_db_id=${dbID.db_id};`) as QueryResult;
         if (rows.at(0)) {
             return rows.at(0).rankings
         }
@@ -63,7 +66,7 @@ export async function addSongAtIndex(song: Track, dbID: number, index: number) {
 }
 
 export async function uploadRatingPostToDB(dbID: number, songID: string, content: string, position: number, rating: string) {
-    await sql`INSERT INTO posts (user_id, date, type, content, song_id, rating_pos, rating_score) VALUES (${dbID}, ${new Date().toISOString()}, 'rating', ${content}, ${songID}, ${position}, ${rating});`;
+    await sql`INSERT INTO posts (user_id, date, type, content, song_id, rating_pos, rating_score) VALUES (${dbID}, CURRENT_TIMESTAMP, 'rating', ${content}, ${songID}, ${position}, ${rating});`;
 }
 
 export async function getPosts(dbID: number, numPosts: number = 20, offset: number = 0) {
@@ -77,4 +80,20 @@ export async function getPosts(dbID: number, numPosts: number = 20, offset: numb
     LIMIT ${numPosts}
     OFFSET ${offset};` as QueryResult;
     return rows;
+}
+
+export async function getUserDBInfo(id: number) {
+    const { rows } = await sql`
+    SELECT users.db_id, users.api_id, users.date_created, users.last_logged, users.photo, followers.following, followers.followers, users.display_name, users.handle_name, song_rankings.rankings
+    FROM users 
+    INNER JOIN followers 
+    ON users.db_id = followers.user_id 
+    LEFT JOIN song_rankings
+    ON song_rankings.user_db_id = users.db_id
+    WHERE users.db_id = ${id};` as QueryResult;
+    if (rows.at(0)) {
+        return rows.at(0) as MelodyUser
+    } else {
+        return null
+    }
 }

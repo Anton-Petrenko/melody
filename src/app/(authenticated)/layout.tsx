@@ -20,12 +20,12 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
   return (
     <SessionProvider>
-      <AudioProvider>
-        <html lang="en" className="dark">
-          <head>
-            <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"></meta>
-          </head>
-          <body className={manrope.className}>
+      <html lang="en" className="dark">
+        <head>
+          <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"></meta>
+        </head>
+        <body className={manrope.className}>
+          <AudioProvider>
             <NextUIProviderWrapper>
               <UserDBInfoProvider>
                 <SearchProvider>
@@ -37,9 +37,9 @@ export default async function RootLayout({ children, }: Readonly<{ children: Rea
                 </SearchProvider>
               </UserDBInfoProvider>
             </NextUIProviderWrapper>
-          </body>
-        </html>
-      </AudioProvider>
+          </AudioProvider>
+        </body>
+      </html>
     </SessionProvider>
   );
 }

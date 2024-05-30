@@ -1,5 +1,7 @@
+import { User } from "../types/types";
 import { NextAuthOptions } from "next-auth";
 import Spotify from "next-auth/providers/spotify";
+import { syncLoginWithDB } from "./DatabaseCalls";
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -24,6 +26,10 @@ export const authOptions: NextAuthOptions = {
         async session({ session, token }) {
             session.user = token
             return session
+        },
+        async signIn({ user, account, profile, email, credentials }) {
+            await syncLoginWithDB(user as User);
+            return true
         }
     },
     pages: {

@@ -58,7 +58,7 @@ export default function RatingProvider({ children, }: Readonly<{ children: React
         }
         if (ratedSongs.length == 0) {
             setRatedSongs([songToRate.id]);
-            addSong(songToRate, userDBInfo.dbID);
+            addSong(songToRate, userDBInfo.dbID as number);
             setCompareTo(null);
             return
         }
@@ -91,7 +91,7 @@ export default function RatingProvider({ children, }: Readonly<{ children: React
             // done rating
             var indexToInsert = Math.floor((left_ + right_) / 2);
             if (left_ != -1) {indexToInsert++} else {indexToInsert = 0}
-            await addSongAtIndex(songToRate as Track, userDBInfo.dbID, indexToInsert);
+            await addSongAtIndex(songToRate as Track, userDBInfo.dbID as number, indexToInsert);
             setRatedSongs([
                 ...ratedSongs.slice(0, indexToInsert),
                 songToRate?.id as string,

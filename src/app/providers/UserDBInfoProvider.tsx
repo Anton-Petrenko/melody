@@ -1,26 +1,35 @@
 "use client"
 
-import { UserDBState } from "../types/types"
 import { getUserDBID } from "../utils/DatabaseCalls";
+import { MelodyUser, UserDBState } from "../types/types";
 import { createContext, useEffect, useState } from "react";
 
 export const UserDBContext = createContext<UserDBState>({} as UserDBState);
 
 export default function UserDBInfoProvider({ children, }: Readonly<{ children: React.ReactNode; }>){
     
-    const [dbID, setdbID] = useState<number>(0);
+    const [dbID, setdbID] = useState<number | null>(null);
+    const [userObject, setUserObject] = useState<MelodyUser | null>(null);
 
     useEffect(() => {
-        const getID = async () => {
-            const uID = await getUserDBID();
-            setdbID(uID as number);
+
+        const setID = async () => {
+            const melodyUser = await getUserDBID();
+            setdbID(melodyUser?.db_id as number);
+            setUserObject(melodyUser);
         }
-        getID();
+
+        if (!dbID) {
+            setID()
+        }
+        
     }, [])
 
     return (
         <UserDBContext.Provider value={{
-            dbID
+            dbID,
+            setdbID,
+            userObject
         }}>
             {children}
         </UserDBContext.Provider>

@@ -1,9 +1,7 @@
 import TrackCard from "./TrackCard";
-import { Suspense, useContext } from "react";
+import { Spinner } from "@nextui-org/react";
 import { TrackSearchResult } from "../types/types";
 import { searchSpotify } from "../utils/SpotifyAPICalls";
-import { SearchContext } from "../providers/SearchProvider";
-import { Spinner } from "@nextui-org/react";
 
 export default async function SearchResults(
     {
@@ -13,7 +11,6 @@ export default async function SearchResults(
         search: string
     }
 ) {
-
     const searchResults = await searchSpotify(search) as TrackSearchResult;
 
     return (

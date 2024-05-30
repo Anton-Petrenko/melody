@@ -38,7 +38,6 @@ export const searchSpotify = async (search: string) => {
 
 export const getProfile = async () => {
     const session = await getAuthSession();
-    console.log(session);
     return spotifyAPI("https://api.spotify.com/v1/me", session);
 }
 

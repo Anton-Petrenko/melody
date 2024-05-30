@@ -50,6 +50,7 @@ export interface User {
         total: number
     }
     images: Image[],
+    image: string 
 }
 
 export interface TrackSearchResult {
@@ -76,7 +77,9 @@ export interface RatingProviderState {
 }
 
 export interface UserDBState {
-    dbID: number
+    dbID: number | null,
+    setdbID: Dispatch<SetStateAction<number | null>>,
+    userObject: MelodyUser | null
 }
 
 export interface SearchState {
@@ -110,4 +113,17 @@ export interface RecentlyPlayedTracks {
     },
     next: string,
     items: PlayHistory[]
+}
+
+export interface MelodyUser {
+    db_id: number,
+    api_id: string,
+    date_created: Date,
+    last_logged: Date,
+    photo: string,
+    following: number[],
+    followers: number[],
+    display_name: string,
+    handle_name: string,
+    rankings: string[] | null
 }

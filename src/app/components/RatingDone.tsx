@@ -28,7 +28,7 @@ export default function RatingDone(
     const [value, setValue] = useState("");
 
     async function uploadPost() {
-        await uploadRatingPostToDB(databaseProvider.dbID, track.id, value, placeInList, rating);
+        await uploadRatingPostToDB(databaseProvider.dbID as number, track.id, value, placeInList, rating);
         ratingProvider.setSongToRate(null);
     }
 
