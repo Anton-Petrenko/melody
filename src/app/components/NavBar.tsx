@@ -7,16 +7,16 @@ import MelodyLogo from "../images/Melody";
 import AvatarButton from "./AvatarButton";
 import { Suspense, useContext } from "react";
 import { usePathname } from "next/navigation";
-import { AudioContext } from "../providers/AudioProvider";
+import { MelodyContext } from "../providers/AppProvider";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/react";
 
 export default function NavBar({ children, }: Readonly<{ children: React.ReactNode; }>){
 
     const pathname = usePathname();
-    const audioContext = useContext(AudioContext);
+    const app = useContext(MelodyContext);
 
     return (
-        <div className="min-h-screen overflow-hidden">
+        <div className="min-h-[100dvh] overflow-hidden">
             <Navbar
                 className="bg-[#181818]"
                 height="8dvh"
@@ -32,7 +32,7 @@ export default function NavBar({ children, }: Readonly<{ children: React.ReactNo
                         <Link
                             className="cursor-pointer"
                             href='/home'
-                            onClick={() => audioContext.pause()}
+                            onClick={() => app?.audio.pause()}
                         >
                             <Image
                                 src="/home.png"
@@ -47,7 +47,7 @@ export default function NavBar({ children, }: Readonly<{ children: React.ReactNo
                         <Link
                             className="cursor-pointer"
                             href='/rate'
-                            onClick={() => audioContext.pause()}
+                            onClick={() => app?.audio.pause()}
                         >
                             <Image
                                 src="/thumbs.png"
@@ -62,7 +62,7 @@ export default function NavBar({ children, }: Readonly<{ children: React.ReactNo
                         <Link
                             className="cursor-pointer"
                             href='/notifications'
-                            onClick={() => audioContext.pause()}
+                            onClick={() => app?.audio.pause()}
                         >
                             <Image
                                 src="/bell.png"
@@ -94,6 +94,7 @@ export default function NavBar({ children, }: Readonly<{ children: React.ReactNo
             </Navbar>
             <div className="min-h-[84dvh] max-h-[84dvh] sm:min-h-[92dvh] sm:max-h-[92dvh] py-2 overflow-y-scroll flex justify-center">
                 {children}
+                
             </div>
             <Navbar 
                 isBordered
@@ -105,7 +106,7 @@ export default function NavBar({ children, }: Readonly<{ children: React.ReactNo
                         <Link
                             className="cursor-pointer"
                             href='/home'
-                            onClick={() => audioContext.pause()}
+                            onClick={() => app?.audio.pause()}
                         >
                             <Image
                                 src="/home.png"
@@ -120,7 +121,7 @@ export default function NavBar({ children, }: Readonly<{ children: React.ReactNo
                         <Link
                             className="cursor-pointer"
                             href='/rate'
-                            onClick={() => audioContext.pause()}
+                            onClick={() => app?.audio.pause()}
                         >
                             <Image
                                 src="/thumbs.png"
@@ -135,7 +136,7 @@ export default function NavBar({ children, }: Readonly<{ children: React.ReactNo
                         <Link
                             className="cursor-pointer"
                             href='/notifications'
-                            onClick={() => audioContext.pause()}
+                            onClick={() => app?.audio.pause()}
                         >
                             <Image
                                 src="/bell.png"

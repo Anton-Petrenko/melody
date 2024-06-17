@@ -3,6 +3,7 @@ import { useContext } from "react";
 import PlayButton from "./PlayButton";
 import { Track } from "../types/types";
 import { RatingContext } from "../providers/RatingProvider";
+import { FaLock } from "react-icons/fa6";
 
 export default function TrackCardRating(
     {
@@ -17,7 +18,12 @@ export default function TrackCardRating(
     }
 ) {
 
+    let color = "";
     const ratingContext = useContext(RatingContext);
+    if (ratingContext.ratedSongs.indexOf(track.id) != -1) {
+        const score = (((ratingContext.ratedSongs.indexOf(track.id) + 1) / ratingContext.ratedSongs.length)*10).toFixed(1);
+        color = Number(score) < 4 ? "red" : (Number(score) > 6.9 ? "green" : "yellow");
+    }
 
     return (
         <>
@@ -32,6 +38,17 @@ export default function TrackCardRating(
                 <div className="flex flex-col text-left w-full relative">
                     <p className="opacity-50 line-clamp-1 text-ellipsis sm:text-sm text-xs">{track.artists.map(artist => artist.name).join(", ")}</p>
                     <b className="line-clamp-1 text-ellipsis sm:line-clamp-2 text-sm sm:text-medium">{track.name}</b>
+                </div>
+                <div>
+                    {
+                        color != "" &&
+                        <h5 className={`${color} font-bold`}>
+                            {
+                                ratingContext.ratedSongs.length < 10 ? <FaLock size={20}/> :
+                                (((ratingContext.ratedSongs.indexOf(track.id) + 1) / ratingContext.ratedSongs.length)*10).toFixed(1)
+                            }
+                        </h5>
+                    }
                 </div>
                 <div className="w-[3rem] flex h-full justify-center items-center">
                     <PlayButton

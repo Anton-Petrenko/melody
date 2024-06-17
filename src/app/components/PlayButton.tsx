@@ -3,7 +3,7 @@
 import { useContext } from "react";
 import { Track } from "../types/types";
 import { FaPause, FaPlay } from "react-icons/fa";
-import { AudioContext } from "../providers/AudioProvider";
+import { MelodyContext } from "../providers/AppProvider";
 
 export default function PlayButton(
     {
@@ -14,7 +14,7 @@ export default function PlayButton(
     }
 ) {
 
-    const audioContext = useContext(AudioContext);
+    const app = useContext(MelodyContext);
 
     return (
         <div 
@@ -22,17 +22,17 @@ export default function PlayButton(
             onClick={(e) => {
                 e.preventDefault();
                 if (track.preview_url) {
-                    if (audioContext.currentTrack?.id === track.id && audioContext.isPlaying){
-                        audioContext.pause();
-                    } else if (audioContext.currentTrack?.id === track.id && !audioContext.isPlaying){
-                        audioContext.play();
+                    if (app?.audio.currentTrack?.id === track.id && app?.audio.isPlaying){
+                        app?.audio.pause();
+                    } else if (app?.audio.currentTrack?.id === track.id && !app?.audio.isPlaying){
+                        app?.audio.play();
                     }
-                    audioContext.setCurrentTrack(track);
+                    app?.audio.setCurrentTrack(track);
                 }
             }}
         >
             {
-                audioContext.currentTrack?.id === track.id && audioContext.isPlaying
+                app?.audio.currentTrack?.id === track.id && app?.audio.isPlaying
                 ?
                 <FaPause/>
                 :

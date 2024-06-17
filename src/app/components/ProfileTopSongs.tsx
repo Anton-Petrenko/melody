@@ -26,7 +26,7 @@ export default function ProfileTopSongs(
             />
             <div className="h-full flex flex-col px-3">
                 <small className="opacity-50">{track.artists.at(0)?.name}</small>
-                <p>{track.name}</p>
+                <p className="line-clamp-1 text-ellipsis sm:line-clamp-2 text-sm sm:text-medium">{track.name}</p>
             </div>
             <div className="absolute right-0">
                 <PlayButton

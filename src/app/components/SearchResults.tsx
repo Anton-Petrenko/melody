@@ -11,7 +11,11 @@ export default async function SearchResults(
         search: string
     }
 ) {
-    const searchResults = await searchSpotify(search) as TrackSearchResult;
+
+    let searchResults = {} as TrackSearchResult;
+    if (search) {
+        searchResults = await searchSpotify(search) as TrackSearchResult;
+    }
 
     return (
         <>

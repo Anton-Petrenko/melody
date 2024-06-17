@@ -3,20 +3,17 @@
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
+import { MelodyContext } from "../providers/AppProvider";
 import { getProfilePhoto } from "../utils/SpotifyAPICalls";
-import { UserDBContext } from "../providers/UserDBInfoProvider";
 import { Avatar, Dropdown, DropdownTrigger, DropdownItem, DropdownMenu } from "@nextui-org/react";
-import { AudioContext } from "../providers/AudioProvider";
 
 export default function AvatarButton() {
 
     const router = useRouter();
-    const userContext = useContext(UserDBContext);
-    const audioContext = useContext(AudioContext);
+    const app = useContext(MelodyContext);
 
     const [avatarSrc, setAvatarSrc] = useState("");
 
-    // On component load, get spotify logo of user
     useEffect(() => {
         getProfilePhoto().then((url) => setAvatarSrc(url))
     }, [])
@@ -32,8 +29,8 @@ export default function AvatarButton() {
             <DropdownMenu
                 onAction={(key) => {
                     if (key == "Profile") {
-                        audioContext.pause();
-                        router.push(`/profile/${userContext.dbID}`);
+                        app?.audio.pause();
+                        router.push(`/profile/${app?.dbCache.user?.db_id}`);
                     } else if (key == "Log Out") {
                         signOut({ callbackUrl: "/" });
                     }

@@ -1,7 +1,7 @@
 'use client'
 
 import Image from "next/image";
-import { Post, Track } from "../types/types";
+import { Post } from "../types/types";
 import PlayButton from "./PlayButton";
 
 export default function TrackCardFeed(
@@ -17,8 +17,7 @@ export default function TrackCardFeed(
 
     return (
         <>
-            <small className="w-full opacity-50">Rated this song at #{post.rating_pos}</small>
-            <div className="w-full h-[5rem] sm:h-[4.5rem] rounded-lg flex flex-row gap-2 p-2 relative">
+            <div className="w-full rounded-lg flex flex-row gap-2 relative">
                 <div className="w-[3rem] h-full items-center justify-center flex">
                     <Image 
                         src={post.song_id_info?.album.images.at(0)?.url as string}

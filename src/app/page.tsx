@@ -2,7 +2,7 @@
 
 import { signIn } from "next-auth/react";
 import { Button } from "@nextui-org/react";
-import SpotifyLogo from "../images/spotify";
+import SpotifyLogo from "./images/spotify";
 
 export default function Page() {
 
@@ -10,7 +10,8 @@ export default function Page() {
         <div className="h-[100dvh] w-[100%] flex justify-center items-center flex-col">
             <h1>Melody</h1>
             <p>Unleash your inner music critic.</p>
-            <Button 
+            <Button
+                disableRipple
                 className="mt-3 bg-[#414141] text-white w-[80%] sm:w-[15rem]" 
                 variant="flat" 
                 startContent={<SpotifyLogo/>}

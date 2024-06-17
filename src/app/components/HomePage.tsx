@@ -1,10 +1,11 @@
 'use client'
 
-import { Suspense } from "react";
+import { Suspense, useContext } from "react";
 import { Post } from "@/app/types/types";
 import { Spinner } from "@nextui-org/react";
 import SearchResults from "./SearchResults";
 import HomeFeed from "@/app/components/HomeFeed";
+import { UserDBContext } from "../providers/UserDBInfoProvider";
 
 export default function HomePage (
     {
@@ -19,8 +20,10 @@ export default function HomePage (
     }
 ) {
 
+    const dbContext = useContext(UserDBContext);
+
     return (
-        <div className="w-full sm:w-[30rem] flex flex-col items-center gap-2">
+        <div className="w-full sm:w-[30rem] flex flex-col items-center">
             {
                 searchParams?.search ?
                 <Suspense fallback={<Spinner color="default" className="h-full"/>}>
@@ -29,9 +32,14 @@ export default function HomePage (
                     />
                 </Suspense>
                 :
-                <HomeFeed
-                    posts={posts}
-                />
+                <>
+                    {
+                        !dbContext.isPendingDBInit && 
+                        <HomeFeed
+                            posts={posts}
+                        />     
+                    }
+                </>
             }
         </div>
     )

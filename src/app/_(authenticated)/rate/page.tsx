@@ -12,7 +12,6 @@ export default async function Rate({
     };
   }) {
 
-    
     const recentSongs = await getRecentSongs() as RecentlyPlayedTracks;
     const topYearSongs = await getTopTracksYear().then((res) => res.items) as Track[];
     const topMonthSongs = await getTopTracksMonth().then((res) => res.items) as Track[];

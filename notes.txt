@@ -1,0 +1,8 @@
+LEFT OFF: 
+
+Refactoring the providers and focusing on making certain pages publicly accessible without an account. Just finished rendering the home page and working with doing redirects on that. Do the rating page next
+
+TEST:
+
+* Free Spotify Accounts logging into app
+* Spotify accounts with no profile picture set

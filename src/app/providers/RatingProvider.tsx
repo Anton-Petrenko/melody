@@ -123,12 +123,12 @@ export default function RatingProvider({ children, }: Readonly<{ children: React
         >
             {
                 songToRate &&
-                <div className="absolute z-10 h-screen w-full bg-black/50 flex flex-col justify-center items-center">
+                <div className="absolute z-10 h-[100dvh] w-full bg-black/50 flex flex-col items-center">
                     <div 
                         className="h-full w-full absolute" 
                         onClick={() => setSongToRate(null)}>
                     </div>
-                    <Card className="w-[95%] sm:w-[35rem]">
+                    <Card className="w-[95%] sm:w-[35rem] mt-40">
                         <CardBody className="flex flex-col gap-2 sm:px-10 px-4 py-8 items-center justify-center relative text-center">
                             <IoMdClose 
                                 className="absolute right-2 top-2 cursor-pointer"
