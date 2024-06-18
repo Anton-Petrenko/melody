@@ -1,8 +1,8 @@
 'use server'
 
 import RatingFeed from "@/app/components/RatingFeed";
-import { RecentlyPlayedTracks, Track } from "@/app/types/types";
-import { getRecentSongs, getTopTracks6Month, getTopTracksMonth, getTopTracksYear } from "@/app/utils/SpotifyAPICalls";
+import { RecentlyPlayedTracks, Track } from "@/app/OLDtypes/types";
+import { getRecentSongs, getTopTracks6Month, getTopTracksMonth, getTopTracksYear } from "@/app/OLDutils/SpotifyAPICalls";
 
 export default async function Rate({
     searchParams,

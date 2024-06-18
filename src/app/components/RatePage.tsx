@@ -3,7 +3,7 @@
 import { useState } from "react";
 import TrackCard from "./TrackCard";
 import { FaChevronDown } from "react-icons/fa";
-import { RecentlyPlayedTracks, Track } from "../types/types";
+import { RecentlyPlayedTracks, Track } from "../OLDtypes/types";
 import { ButtonGroup, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
 
 export default function RatePage(

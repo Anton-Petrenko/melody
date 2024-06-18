@@ -7,7 +7,7 @@ import MelodyLogo from "../images/Melody";
 import AvatarButton from "./AvatarButton";
 import { Suspense, useContext } from "react";
 import { usePathname } from "next/navigation";
-import { MelodyContext } from "../providers/AppProvider";
+import { MelodyContext } from "../OLDproviders/AppProvider";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/react";
 
 export default function NavBar({ children, }: Readonly<{ children: React.ReactNode; }>){

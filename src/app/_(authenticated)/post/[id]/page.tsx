@@ -1,9 +1,9 @@
 'use server'
 
 import PostPage from "@/app/components/PostPage";
-import { Track } from "@/app/types/types";
-import { getPost } from "@/app/utils/DatabaseCalls";
-import { getSongByID } from "@/app/utils/SpotifyAPICalls";
+import { Track } from "@/app/OLDtypes/types";
+import { getPost } from "@/app/OLDutils/DatabaseCalls";
+import { getSongByID } from "@/app/OLDutils/SpotifyAPICalls";
 
 export default async function ExpandedPost(
     {

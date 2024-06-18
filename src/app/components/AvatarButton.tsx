@@ -3,8 +3,8 @@
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
-import { MelodyContext } from "../providers/AppProvider";
-import { getProfilePhoto } from "../utils/SpotifyAPICalls";
+import { MelodyContext } from "../OLDproviders/AppProvider";
+import { getProfilePhoto } from "../OLDutils/SpotifyAPICalls";
 import { Avatar, Dropdown, DropdownTrigger, DropdownItem, DropdownMenu } from "@nextui-org/react";
 
 export default function AvatarButton() {

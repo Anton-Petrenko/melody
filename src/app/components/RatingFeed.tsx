@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import RatePage from "./RatePage";
 import { Spinner } from "@nextui-org/react";
 import SearchResults from "./SearchResults";
-import { RecentlyPlayedTracks, Track } from "../types/types";
+import { RecentlyPlayedTracks, Track } from "../OLDtypes/types";
 
 export default function RatingFeed(
     {

@@ -1,6 +1,6 @@
 "use client"
 
-import { AudioProviderState, Track } from "../types/types";
+import { AudioProviderState, Track } from "../OLDtypes/types";
 import { createContext, useEffect, useState } from "react";
 
 export const AudioContext = createContext<AudioProviderState>({} as AudioProviderState);

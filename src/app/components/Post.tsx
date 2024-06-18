@@ -3,14 +3,14 @@
 import Image from "next/image";
 import { FaHeart } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
-import type { Post } from "../types/types";
+import type { Post } from "../OLDtypes/types";
 import { Button } from "@nextui-org/react";
 import TrackCardFeed from "./TrackCardFeed";
 import { FaRegHeart } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import { MelodyContext } from "../providers/AppProvider";
+import { MelodyContext } from "../OLDproviders/AppProvider";
 import { useContext, useRef, useTransition } from "react";
-import { hatePostDB, likePostDB, unhatePostDB, unlikePostDB } from "../utils/DatabaseCalls";
+import { hatePostDB, likePostDB, unhatePostDB, unlikePostDB } from "../OLDutils/DatabaseCalls";
 
 export default function DisplayPost(
     {

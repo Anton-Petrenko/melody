@@ -1,10 +1,10 @@
 'use server'
 
-import { Post, Track } from "@/app/types/types"
+import { Post, Track } from "@/app/OLDtypes/types"
 import { revalidatePath } from "next/cache"
 import ProfilePage from "@/app/components/ProfilePage"
-import { getPosts, getUserDBInfo } from "@/app/utils/DatabaseCalls"
-import { getSongByID } from "@/app/utils/SpotifyAPICalls"
+import { getPosts, getUserDBInfo } from "@/app/OLDutils/DatabaseCalls"
+import { getSongByID } from "@/app/OLDutils/SpotifyAPICalls"
 
 export default async function Profile(
     {

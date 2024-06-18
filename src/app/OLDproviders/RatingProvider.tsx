@@ -5,12 +5,12 @@ import { AudioContext } from "./AudioProvider";
 import RatingDone from "../components/RatingDone";
 import { Card, CardBody } from "@nextui-org/react";
 import { UserDBContext } from "./UserDBInfoProvider";
-import { getSongByID } from "../utils/SpotifyAPICalls";
+import { getSongByID } from "../OLDutils/SpotifyAPICalls";
 import NewUserRating from "../components/NewUserRating";
-import { RatingProviderState, Track } from "../types/types";
+import { RatingProviderState, Track } from "../OLDtypes/types";
 import TrackCardRating from "../components/TrackCardRating";
 import TrackCardRatingLoading from "../components/TrackCardRatingLoading";
-import { addSong, addSongAtIndex, getRatedSongs } from "../utils/DatabaseCalls";
+import { addSong, addSongAtIndex, getRatedSongs } from "../OLDutils/DatabaseCalls";
 import { Suspense, createContext, useContext, useEffect, useRef, useState } from "react";
 
 export const RatingContext = createContext<RatingProviderState>({} as any);

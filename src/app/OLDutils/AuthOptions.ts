@@ -1,6 +1,7 @@
-import { dbIDFetch, dbRatedSongsFetch, pingDB } from "./DatabaseCalls";
+import { User } from "../OLDtypes/types";
 import { NextAuthOptions } from "next-auth";
 import Spotify from "next-auth/providers/spotify";
+import { syncLoginWithDB } from "./DatabaseCalls";
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -19,23 +20,15 @@ export const authOptions: NextAuthOptions = {
         async jwt({ token, account }) {
             if (account) {
               token.accessToken = account.access_token
-              if (token.sub) { 
-                token.db_id = await dbIDFetch(token.sub);
-                token.rated_songs = await dbRatedSongsFetch(token.db_id as number);
-              }
-              else { 
-                console.log("ERROR Code 003"); 
-                token.db_id = undefined;
-              }
             }
             return token
         },
         async session({ session, token }) {
-            session.user = token;
+            session.user = token
             return session
         },
-        async signIn({ user }) {
-            await pingDB(user);
+        async signIn({ user, account, profile, email, credentials }) {
+            await syncLoginWithDB(user as User);
             return true
         }
     },

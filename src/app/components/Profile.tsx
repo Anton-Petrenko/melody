@@ -2,16 +2,16 @@
 
 import Image from "next/image"
 import { useContext, useState, useTransition } from "react"
-import { MelodyUser, Post, Track } from "../types/types"
-import { RatingContext } from "../providers/RatingProvider"
-import { UserDBContext } from "../providers/UserDBInfoProvider"
+import { MelodyUser, Post, Track } from "../OLDtypes/types"
+import { RatingContext } from "../OLDproviders/RatingProvider"
+import { UserDBContext } from "../OLDproviders/UserDBInfoProvider"
 import { Button } from "@nextui-org/react"
 import { SlUserFollow, SlUserFollowing } from "react-icons/sl"
 import { CiSettings } from "react-icons/ci"
 import TrackCard from "./TrackCard"
 import ProfileTopSongs from "./ProfileTopSongs"
 import DisplayPost from "./Post"
-import { followDB, unfollowDB } from "../utils/DatabaseCalls"
+import { followDB, unfollowDB } from "../OLDutils/DatabaseCalls"
 
 export default function Profile(
     {

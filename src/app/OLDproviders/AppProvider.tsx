@@ -4,13 +4,13 @@ import { useRouter } from "next/navigation";
 import { IoMdClose } from "react-icons/io";
 import RatingDone from "../components/RatingDone";
 import { Card, CardBody } from "@nextui-org/react";
-import { getSongByID } from "../utils/SpotifyAPICalls";
+import { getSongByID } from "../OLDutils/SpotifyAPICalls";
 import NewUserRating from "../components/NewUserRating";
 import TrackCardRating from "../components/TrackCardRating";
-import { AppContext, Track, UserInfo } from "../types/types";
+import { AppContext, Track, UserInfo } from "../OLDtypes/types";
 import { createContext, useEffect, useState, useTransition } from "react";
 import TrackCardRatingLoading from "../components/TrackCardRatingLoading";
-import { addSong, addSongAtIndex, getUserDBID, getUserDBInfo } from "../utils/DatabaseCalls";
+import { addSong, addSongAtIndex, getUserDBID, getUserDBInfo } from "../OLDutils/DatabaseCalls";
 
 /**
  * The master context object for the entire application.

@@ -1,7 +1,7 @@
 'use client'
 
 import Image from "next/image";
-import { Post } from "../types/types";
+import { Post } from "../OLDtypes/types";
 import PlayButton from "./PlayButton";
 
 export default function TrackCardFeed(

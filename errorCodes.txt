@@ -1,0 +1,17 @@
+001 > The NextAuth signIn callback did not contain an id field. (providers/DatabaseCalls)
+002 > A new users database ID was not returned on creation. (providers/DatabaseCalls)
+003 > The JWT callback did not fetch the database ID because there was a missing field in the token (utils/authOptions)
+
+TEST NOTES
+-----------
++ Check to see what happens with a new user with no profile picture (related code 001)
+
+TODO
+-----------
+% Ideally, fetching rated songs (utils/DatabaseCalls) should return the full list of songs with their info:
+    - every time a user rates a new song, that song and its information is stored in the database
+    - subsequent fetches for new songs will prioritize recall from the database instead of the Spotify API
+
+LAST
+-----------
+Working on the JWT callback in utils/authOptions. Want to see if I can directly return client information in the JWT instead of using React context.

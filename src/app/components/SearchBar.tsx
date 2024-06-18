@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { Input } from "@nextui-org/react";
 import { FaSearch } from "react-icons/fa";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
-import { MelodyContext } from "../providers/AppProvider";
+import { MelodyContext } from "../OLDproviders/AppProvider";
 
 export default function SearchBar() {
 

@@ -1,7 +1,7 @@
 "use client"
 
-import { getUserDBID, getUserDBInfo } from "../utils/DatabaseCalls";
-import { MelodyUser, UserDBState } from "../types/types";
+import { getUserDBID, getUserDBInfo } from "../OLDutils/DatabaseCalls";
+import { MelodyUser, UserDBState } from "../OLDtypes/types";
 import { createContext, useEffect, useState, useTransition } from "react";
 
 export const UserDBContext = createContext<UserDBState>({} as UserDBState);

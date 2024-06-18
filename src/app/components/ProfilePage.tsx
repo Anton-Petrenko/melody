@@ -4,8 +4,8 @@ import { Suspense, useContext } from "react"
 import { Spinner } from "@nextui-org/react"
 import SearchResults from "./SearchResults"
 import Profile from "./Profile"
-import { MelodyUser, Post, Track } from "../types/types"
-import { UserDBContext } from "../providers/UserDBInfoProvider"
+import { MelodyUser, Post, Track } from "../OLDtypes/types"
+import { UserDBContext } from "../OLDproviders/UserDBInfoProvider"
 
 export default function ProfilePage(
     {

@@ -1,11 +1,11 @@
 "use client"
 
-import { Track } from "../types/types";
+import { Track } from "../OLDtypes/types";
 import { useContext, useState } from "react";
 import { Button, Slider, Textarea } from "@nextui-org/react";
-import { uploadRatingPostToDB } from "../utils/DatabaseCalls";
-import { UserDBContext } from "../providers/UserDBInfoProvider";
-import { RatingContext } from "../providers/RatingProvider";
+import { uploadRatingPostToDB } from "../OLDutils/DatabaseCalls";
+import { UserDBContext } from "../OLDproviders/UserDBInfoProvider";
+import { RatingContext } from "../OLDproviders/RatingProvider";
 
 export default function RatingDone(
     {

@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { useContext } from "react";
 import PlayButton from "./PlayButton";
-import { Track } from "../types/types";
-import { RatingContext } from "../providers/RatingProvider";
+import { Track } from "../OLDtypes/types";
+import { RatingContext } from "../OLDproviders/RatingProvider";
 import { FaLock } from "react-icons/fa6";
 
 export default function TrackCardRating(

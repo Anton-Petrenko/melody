@@ -1,11 +1,11 @@
 'use client'
 
 import { Suspense, useContext } from "react";
-import { Post } from "@/app/types/types";
+import { Post } from "@/app/OLDtypes/types";
 import { Spinner } from "@nextui-org/react";
 import SearchResults from "./SearchResults";
 import HomeFeed from "@/app/components/HomeFeed";
-import { UserDBContext } from "../providers/UserDBInfoProvider";
+import { UserDBContext } from "../OLDproviders/UserDBInfoProvider";
 
 export default function HomePage (
     {

@@ -1,9 +1,9 @@
 'use client'
 
 import { useContext } from "react";
-import { Track } from "../types/types";
+import { Track } from "../OLDtypes/types";
 import { FaPause, FaPlay } from "react-icons/fa";
-import { MelodyContext } from "../providers/AppProvider";
+import { MelodyContext } from "../OLDproviders/AppProvider";
 
 export default function PlayButton(
     {

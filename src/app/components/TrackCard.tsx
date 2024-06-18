@@ -3,10 +3,10 @@
 import Image from "next/image";
 import { useContext } from "react";
 import PlayButton from "./PlayButton";
-import { Track } from "../types/types";
+import { Track } from "../OLDtypes/types";
 import { FaLock } from "react-icons/fa6";
 import { MdOutlineStar } from "react-icons/md";
-import { MelodyContext } from "../providers/AppProvider";
+import { MelodyContext } from "../OLDproviders/AppProvider";
 
 export default function TrackCard(
     {

@@ -1,7 +1,7 @@
 "use server"
 
 import { redirect } from "next/navigation";
-import { Track, User } from "../types/types";
+import { Track, User } from "../OLDtypes/types";
 import { getAuthSession } from "./GetSession";
 
 const spotifyAPI = async (url: string, session: any) => {

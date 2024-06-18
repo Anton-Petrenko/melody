@@ -1,7 +1,7 @@
 "use client"
 
 import { createContext, useEffect, useState } from "react"
-import { SearchState } from "../types/types";
+import { SearchState } from "../OLDtypes/types";
 
 export const SearchContext = createContext<SearchState>({term: ""} as SearchState);
 

@@ -1,7 +1,7 @@
 import DisplayPost from "./Post";
-import { Post, Track } from "../types/types";
-import { getPosts } from "../utils/DatabaseCalls";
-import { getSongByID } from "../utils/SpotifyAPICalls";
+import { Post, Track } from "../OLDtypes/types";
+import { getPosts } from "../OLDutils/DatabaseCalls";
+import { getSongByID } from "../OLDutils/SpotifyAPICalls";
 import { Suspense } from "react";
 import { Spinner } from "@nextui-org/react";
 import SearchResults from "./SearchResults";

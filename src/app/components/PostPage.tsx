@@ -1,10 +1,10 @@
 'use client'
 
 import { FaLongArrowAltLeft } from "react-icons/fa"
-import { Post as PostType } from "../types/types"
+import { Post as PostType } from "../OLDtypes/types"
 import Post from "./Post"
 import { useRouter } from "next/navigation"
-import { AudioContext } from "../providers/AudioProvider"
+import { AudioContext } from "../OLDproviders/AudioProvider"
 import { useContext } from "react"
 
 export default function PostPage(

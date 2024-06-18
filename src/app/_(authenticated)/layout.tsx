@@ -2,9 +2,9 @@ import "../globals.css";
 import type { Metadata } from "next";
 import NavBar from "../components/NavBar";
 import { Manrope } from "next/font/google";
-import MelodyProvider from "../providers/AppProvider";
-import SessionProvider from "@/app/providers/SessionProvider";
-import NextUIProviderWrapper from "../providers/NextUIProvider";
+import MelodyProvider from "../OLDproviders/AppProvider";
+import SessionProvider from "@/app/OLDproviders/SessionProvider";
+import NextUIProviderWrapper from "../OLDproviders/NextUIProvider";
 
 const manrope = Manrope({ subsets: ["latin"], weight: ["200", "300", "400", "500", "600", "700", "800"] });
 

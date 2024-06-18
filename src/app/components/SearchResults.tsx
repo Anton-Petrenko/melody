@@ -1,7 +1,7 @@
 import TrackCard from "./TrackCard";
 import { Spinner } from "@nextui-org/react";
-import { TrackSearchResult } from "../types/types";
-import { searchSpotify } from "../utils/SpotifyAPICalls";
+import { TrackSearchResult } from "../OLDtypes/types";
+import { searchSpotify } from "../OLDutils/SpotifyAPICalls";
 
 export default async function SearchResults(
     {
