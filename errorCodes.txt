@@ -1,6 +1,7 @@
 001 > The NextAuth signIn callback did not contain an id field. (providers/DatabaseCalls)
 002 > A new users database ID was not returned on creation. (providers/DatabaseCalls)
-003 > The JWT callback did not fetch the database ID because there was a missing field in the token (utils/authOptions)
+003 > The JWT callback did not fetch the user information because there was a missing field in the token itself (utils/authOptions)
+004 > The JWT callback did not sufficiently populate the user information fields (utils/authOptions)
 
 TEST NOTES
 -----------
@@ -11,7 +12,11 @@ TODO
 % Ideally, fetching rated songs (utils/DatabaseCalls) should return the full list of songs with their info:
     - every time a user rates a new song, that song and its information is stored in the database
     - subsequent fetches for new songs will prioritize recall from the database instead of the Spotify API
+% Replace all default NextAuth pages with custom ones in case it ever redirects there
+% Check NextJS documentation to see all the default pages NextJS lets you customize and add them
+% Figure out light/dark mode
+% Experiment with changing the navbar to being anchored in styling/something thats not dvh dependent
 
 LAST
 -----------
-Working on the JWT callback in utils/authOptions. Want to see if I can directly return client information in the JWT instead of using React context.
+Working on the navigation bar front-end. Need to implement the avatar button and the search bar functionality. The authenticated pages now load based on whether the client can validate a session (done in the app context object)

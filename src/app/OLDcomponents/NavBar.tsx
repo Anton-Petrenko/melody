@@ -97,7 +97,6 @@ export default function NavBar({ children, }: Readonly<{ children: React.ReactNo
                 
             </div>
             <Navbar 
-                isBordered
                 height="8dvh"
                 className="sm:hidden bg-[#181818]"
             >

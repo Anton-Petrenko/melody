@@ -19,9 +19,10 @@ export const authOptions: NextAuthOptions = {
         async jwt({ token, account }) {
             if (account) {
               token.accessToken = account.access_token
-              if (token.sub) { 
+              if (token.sub) {
                 token.db_id = await dbIDFetch(token.sub);
                 token.rated_songs = await dbRatedSongsFetch(token.db_id as number);
+                if (!token.db_id && !token.rated_songs) { console.log("ERROR Code 004"); }
               }
               else { 
                 console.log("ERROR Code 003"); 
