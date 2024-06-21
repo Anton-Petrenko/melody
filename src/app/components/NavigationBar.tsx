@@ -7,6 +7,7 @@ import MelodyLogo from "../images/Melody";
 import { usePathname } from "next/navigation";
 import { MelodyContext } from "../providers/AppProvider";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/react";
+import SearchBar from "./SearchBar";
 
 export default function NavigationBar({ children, }: Readonly<{ children: React.ReactNode; }>) {
 
@@ -25,7 +26,7 @@ export default function NavigationBar({ children, }: Readonly<{ children: React.
                         height={30}
                     />
                 </NavbarBrand>
-                <NavbarContent justify='center' className="hidden sm:flex gap-14">
+                <NavbarContent justify='center' className="hidden sm:flex gap-12">
                     <NavbarItem>
                         <Link
                             className="cursor-pointer"
@@ -72,7 +73,12 @@ export default function NavigationBar({ children, }: Readonly<{ children: React.
                         </Link>
                     </NavbarItem>
                     <NavbarItem>
-                        {/* SEARCH BAR */}
+                        <SearchBar/>
+                    </NavbarItem>
+                </NavbarContent>
+                <NavbarContent justify='center' className="sm:hidden flex gap-14">
+                    <NavbarItem>
+                        <SearchBar/>
                     </NavbarItem>
                 </NavbarContent>
                 <NavbarContent justify='end'>

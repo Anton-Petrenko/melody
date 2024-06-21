@@ -2,6 +2,8 @@
 002 > A new users database ID was not returned on creation. (providers/DatabaseCalls)
 003 > The JWT callback did not fetch the user information because there was a missing field in the token itself (utils/authOptions)
 004 > The JWT callback did not sufficiently populate the user information fields (utils/authOptions)
+005 > /home was rendered with a null app context (/home)
+006 > The clientside rated songs effect hook processed a null value (providers/AppProvider)
 
 TEST NOTES
 -----------
@@ -19,4 +21,4 @@ TODO
 
 LAST
 -----------
-Working on the navigation bar front-end. Need to implement the avatar button and the search bar functionality. The authenticated pages now load based on whether the client can validate a session (done in the app context object)
+Working on the search bar implementation. user session data is no longer managed actively, it is simply fetched into context asynchronously and shared with the application that way

@@ -1,7 +1,7 @@
 "use client"
 
 import { useSession } from "next-auth/react";
-import { AppProvider } from "../types/AppTypes";
+import { AppProvider, MelodyUser } from "../types/AppTypes";
 import { SpotifyTrack } from "../types/SpotifyTypes";
 import { createContext, useEffect, useState } from "react";
 
@@ -11,10 +11,6 @@ import { createContext, useEffect, useState } from "react";
 export const MelodyContext = createContext<AppProvider | null>(null);
 
 export default function MelodyProvider({ children, }: Readonly<{ children: React.ReactNode; }>) {
-
-    const user = useSession({
-        required: true
-    })
 
     // Audio Control
 
@@ -76,14 +72,14 @@ export default function MelodyProvider({ children, }: Readonly<{ children: React
 
     // Rating Control
 
-    // const [left, setLeft] = useState<number>(-1);
-    // const [right, setRight]= useState<number>(-1);
-    // const [midpoint, setMidpoint] = useState<number>(-1);
-    // const [showPostScreen, setPostScreen] = useState(false);
-    // const [newUser, setNewUser] = useState<boolean | null>(null);
-    // const [ratedSongs, setRatedSongs] = useState<string[] | null>(null);
-    // const [compareTo, setCompareTo] = useState<SpotifyTrack | null>(null);
-    // const [songToRate, setSongToRate] = useState<SpotifyTrack | null>(null);
+    const [left, setLeft] = useState<number>(-1);
+    const [right, setRight]= useState<number>(-1);
+    const [midpoint, setMidpoint] = useState<number>(-1);
+    const [showPostScreen, setPostScreen] = useState(false);
+    const [newUser, setNewUser] = useState<boolean | null>(null);
+    const [ratedSongs, setRatedSongs] = useState<string[] | undefined>(undefined);
+    const [compareTo, setCompareTo] = useState<SpotifyTrack | null>(null);
+    const [songToRate, setSongToRate] = useState<SpotifyTrack | null>(null);
 
     // useEffect(() => {
     //     if (ratedSongs) {
@@ -92,12 +88,11 @@ export default function MelodyProvider({ children, }: Readonly<{ children: React
     //         setMidpoint(Math.floor((ratedSongs.length - 1) / 2));
     //     }
     //     else {
-    //         console.log("WARNING Code A");
+    //         console.log("WARNING Code 006");
     //     }
     // }, [ratedSongs])
 
     // useEffect(() => {
-
     //     if (ratedSongs && user) {
     //         pause();
     //         setPostScreen(false);
@@ -177,7 +172,7 @@ export default function MelodyProvider({ children, }: Readonly<{ children: React
 
     // Global Call at Load
 
-    useEffect(() => {
+    // useEffect(() => {
         
         // startTransition(() => {
         //     const setUserDetails = async () => {
@@ -201,23 +196,34 @@ export default function MelodyProvider({ children, }: Readonly<{ children: React
         //     if (!user && !dbSyncIsPending) {setUserDetails();}
         // })
 
-    }, [])
+    // }, [])
 
-    return (
-        <div>
-            {
-                user.status == "authenticated" ?
-                <MelodyContext.Provider value={{
-                    audio: {
-                        pause
-                    }
-                }}>
-                    {children}
-                </MelodyContext.Provider>
-                :
-                <p>temporary loading screen</p>
-            }
-        </div>
+    // Session
+    const auth = useSession({ required: true }) as MelodyUser;
+    const [session, setSession] = useState<MelodyUser | undefined>(undefined);
+
+    useEffect(() => {
+        if (auth.status == "authenticated" && !session) {
+            setSession(auth);
+            setRatedSongs(auth.data.rated_songs ? auth.data.rated_songs : []);
+            setNewUser(auth.data.rated_songs ? auth.data.rated_songs.length == 0 : true);
+        }
+    }, [auth])
+
+    return (      
+        <MelodyContext.Provider value={{
+            audio: {
+                pause
+            },
+            rating: {
+                ratedSongs,
+                setRatedSongs,
+                setNewUser
+            },
+            session
+        }}>
+            {children}
+        </MelodyContext.Provider>
     )
 
 }
