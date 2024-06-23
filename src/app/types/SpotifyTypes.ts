@@ -33,3 +33,8 @@ export interface SpotifyImage {
     height: number | null,
     width: number | null,
 }
+
+export interface SpotifyPlayHistoryObject {
+    played_at: string,
+    track: SpotifyTrack
+}

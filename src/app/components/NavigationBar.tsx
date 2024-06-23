@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import { MelodyContext } from "../providers/AppProvider";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/react";
 import SearchBar from "./SearchBar";
+import AvatarButton from "./AvatarButton";
 
 export default function NavigationBar({ children, }: Readonly<{ children: React.ReactNode; }>) {
 
@@ -83,7 +84,10 @@ export default function NavigationBar({ children, }: Readonly<{ children: React.
                 </NavbarContent>
                 <NavbarContent justify='end'>
                     <NavbarItem>
-                        {/* PROFILE BUTTON */}
+                        {
+                            app?.session?.status == "authenticated" &&
+                            <AvatarButton/>
+                        }
                     </NavbarItem>
                 </NavbarContent>
             </Navbar>

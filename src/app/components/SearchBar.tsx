@@ -8,6 +8,7 @@ export default function SearchBar() {
         <Input
             placeholder="Search..."
             startContent={<FaSearch/>}
+            isDisabled
         >
         </Input>
     )

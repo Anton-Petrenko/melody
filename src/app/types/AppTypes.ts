@@ -1,11 +1,16 @@
-import { Session } from "next-auth"
+import { ISODateString, Session } from "next-auth"
 import { Dispatch, SetStateAction } from "react"
+import { SpotifyTrack } from "./SpotifyTypes"
 
 
 /** A type to represent the top-level app React context */
 export interface AppProvider {
     audio: {
-        pause: () => void
+        isPlaying: boolean,
+        currentTrack: SpotifyTrack | null,
+        setCurrentTrack: Dispatch<SetStateAction<SpotifyTrack | null>>,
+        pause: () => void,
+        play: () => Promise<void>
     },
     rating: {
         ratedSongs: string[] | undefined
@@ -24,6 +29,14 @@ export interface MelodyUser {
 
 /** The session object definition given to the client */
 export interface MelodySession extends Session {
-    db_id: number | undefined,
-    rated_songs: string[] | undefined
+    user?: {
+        name?: string | null
+        email?: string | null
+        image?: string | null,
+        picture: string | undefined,
+        db_id: number | undefined,
+        rated_songs: string[] | undefined,
+        accessToken: string
+      }
+    expires: ISODateString
 }

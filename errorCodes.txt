@@ -4,6 +4,9 @@
 004 > The JWT callback did not sufficiently populate the user information fields (utils/authOptions)
 005 > /home was rendered with a null app context (/home)
 006 > The clientside rated songs effect hook processed a null value (providers/AppProvider)
+007 > The call to load /rate fetched a null session and could not be loaded (utils/SpotifyCalls)
+008 > Session was requested but returned null (utils/GetSession)
+009 > Spotify API calls to populate /rate did not result in expected response (likely due to an expired token) (utils/SpotifyCalls)
 
 TEST NOTES
 -----------
@@ -18,6 +21,7 @@ TODO
 % Check NextJS documentation to see all the default pages NextJS lets you customize and add them
 % Figure out light/dark mode
 % Experiment with changing the navbar to being anchored in styling/something thats not dvh dependent
+% Sometimes the user token will expire while making API calls - handle this!!!
 
 LAST
 -----------

@@ -205,15 +205,19 @@ export default function MelodyProvider({ children, }: Readonly<{ children: React
     useEffect(() => {
         if (auth.status == "authenticated" && !session) {
             setSession(auth);
-            setRatedSongs(auth.data.rated_songs ? auth.data.rated_songs : []);
-            setNewUser(auth.data.rated_songs ? auth.data.rated_songs.length == 0 : true);
+            setRatedSongs(auth.data.user?.rated_songs ? auth.data.user.rated_songs : []);
+            setNewUser(auth.data.user?.rated_songs ? auth.data.user.rated_songs.length == 0 : true);
         }
     }, [auth])
 
-    return (      
+    return (
         <MelodyContext.Provider value={{
             audio: {
-                pause
+                isPlaying,
+                currentTrack,
+                setCurrentTrack,
+                pause,
+                play
             },
             rating: {
                 ratedSongs,
