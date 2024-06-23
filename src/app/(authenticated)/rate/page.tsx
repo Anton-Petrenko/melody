@@ -1,30 +1,14 @@
-'use server'
+import RateForYou from "@/app/components/RateForYou";
+import { Suspense } from "react";
 
-import RatingFeed from "@/app/components/RatingFeed";
-import { RecentlyPlayedTracks, Track } from "@/app/types/types";
-import { getRecentSongs, getTopTracks6Month, getTopTracksMonth, getTopTracksYear } from "@/app/utils/SpotifyAPICalls";
-
-export default async function Rate({
-    searchParams,
-  }: {
-    searchParams?: {
-      search?: string;
-    };
-  }) {
-
-    
-    const recentSongs = await getRecentSongs() as RecentlyPlayedTracks;
-    const topYearSongs = await getTopTracksYear().then((res) => res.items) as Track[];
-    const topMonthSongs = await getTopTracksMonth().then((res) => res.items) as Track[];
-    const top6MonthSongs = await getTopTracks6Month().then((res) => res.items) as Track[];
-
+export default function Rate() {
     return (
-        <RatingFeed
-            searchParams={searchParams}
-            recentSongs={recentSongs}
-            topMonth={topMonthSongs}
-            top6Month={top6MonthSongs}
-            topYear={topYearSongs}
-        />
+        <div>
+            <h3 className="sm:w-[35rem] w-[95%]">Rate Songs</h3>
+            <p className="sm:w-[35rem] w-[95%] opacity-50 mb-3">We've generated a catalog based on your Spotify activity: </p>
+            <Suspense>
+                <RateForYou/>
+            </Suspense>
+        </div>
     )
 }

@@ -1,0 +1,28 @@
+001 > The NextAuth signIn callback did not contain an id field. (providers/DatabaseCalls)
+002 > A new users database ID was not returned on creation. (providers/DatabaseCalls)
+003 > The JWT callback did not fetch the user information because there was a missing field in the token itself (utils/authOptions)
+004 > The JWT callback did not sufficiently populate the user information fields (utils/authOptions)
+005 > /home was rendered with a null app context (/home)
+006 > The clientside rated songs effect hook processed a null value (providers/AppProvider)
+007 > The call to load /rate fetched a null session and could not be loaded (utils/SpotifyCalls)
+008 > Session was requested but returned null (utils/GetSession)
+009 > Spotify API calls to populate /rate did not result in expected response (likely due to an expired token) (utils/SpotifyCalls)
+
+TEST NOTES
+-----------
++ Check to see what happens with a new user with no profile picture (related code 001)
+
+TODO
+-----------
+% Ideally, fetching rated songs (utils/DatabaseCalls) should return the full list of songs with their info:
+    - every time a user rates a new song, that song and its information is stored in the database
+    - subsequent fetches for new songs will prioritize recall from the database instead of the Spotify API
+% Replace all default NextAuth pages with custom ones in case it ever redirects there
+% Check NextJS documentation to see all the default pages NextJS lets you customize and add them
+% Figure out light/dark mode
+% Experiment with changing the navbar to being anchored in styling/something thats not dvh dependent
+% Sometimes the user token will expire while making API calls - handle this!!!
+
+LAST
+-----------
+Working on the search bar implementation. user session data is no longer managed actively, it is simply fetched into context asynchronously and shared with the application that way

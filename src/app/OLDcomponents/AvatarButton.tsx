@@ -1,28 +1,38 @@
 "use client"
 
-import { useContext } from "react";
 import { signOut } from "next-auth/react";
-import { MelodyContext } from "../providers/AppProvider";
-import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
+import { useContext, useEffect, useState } from "react";
+import { MelodyContext } from "../OLDproviders/AppProvider";
+import { getProfilePhoto } from "../OLDutils/SpotifyAPICalls";
+import { Avatar, Dropdown, DropdownTrigger, DropdownItem, DropdownMenu } from "@nextui-org/react";
 
 export default function AvatarButton() {
 
-    const melody = useContext(MelodyContext);
+    const router = useRouter();
+    const app = useContext(MelodyContext);
+
+    const [avatarSrc, setAvatarSrc] = useState("");
+
+    useEffect(() => {
+        getProfilePhoto().then((url) => setAvatarSrc(url))
+    }, [])
 
     return (
         <Dropdown closeOnSelect={true}>
             <DropdownTrigger>
                 <Avatar
-                    src={melody?.session?.data.user?.picture}
+                    src={avatarSrc}
                     className="cursor-pointer"
-                    radius="lg"
                 />
             </DropdownTrigger>
             <DropdownMenu
                 aria-label="Profile Menu"
-                disabledKeys={["Profile"]}
                 onAction={(key) => {
-                    if (key == "Log Out") {
+                    if (key == "Profile") {
+                        app?.audio.pause();
+                        router.push(`/profile/${app?.dbCache.user?.db_id}`);
+                    } else if (key == "Log Out") {
                         signOut({ callbackUrl: "/" });
                     }
                 }}

@@ -1,42 +1,37 @@
-'use client'
+"use client"
 
 import { useContext } from "react";
-import { Track } from "../types/types";
-import { FaPause, FaPlay } from "react-icons/fa";
-import { AudioContext } from "../providers/AudioProvider";
+import { MelodyContext } from "../providers/AppProvider";
+import { SpotifyTrack } from "../types/SpotifyTypes";
+import { FaPause, FaPlay } from "react-icons/fa6";
 
 export default function PlayButton(
-    {
-        track
-    }:
-    {
-        track: Track
-    }
+    { song }: { song: SpotifyTrack }
 ) {
 
-    const audioContext = useContext(AudioContext);
+    const melody = useContext(MelodyContext);
 
     return (
         <div 
-            className={"cursor-pointer opacity-" + (track.preview_url ? 100 : 0)}
+            className={"flex-shrink-0 cursor-pointer opacity-" + (song.preview_url ? 100 : 0)}
             onClick={(e) => {
                 e.preventDefault();
-                if (track.preview_url) {
-                    if (audioContext.currentTrack?.id === track.id && audioContext.isPlaying){
-                        audioContext.pause();
-                    } else if (audioContext.currentTrack?.id === track.id && !audioContext.isPlaying){
-                        audioContext.play();
+                if (song.preview_url) {
+                    if (melody?.audio.currentTrack?.id === song.id && melody?.audio.isPlaying){
+                        melody?.audio.pause();
+                    } else if (melody?.audio.currentTrack?.id === song.id && !melody?.audio.isPlaying){
+                        melody?.audio.play();
                     }
-                    audioContext.setCurrentTrack(track);
+                    melody?.audio.setCurrentTrack(song);
                 }
             }}
         >
             {
-                audioContext.currentTrack?.id === track.id && audioContext.isPlaying
+                melody?.audio.currentTrack?.id === song.id && melody?.audio.isPlaying
                 ?
-                <FaPause/>
+                <FaPause size={22} />
                 :
-                <FaPlay/>
+                <FaPlay size={22} />
             }
         </div>
     )
