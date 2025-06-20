@@ -9,8 +9,7 @@ export async function spotifyAPI (url: string, session: Partial<Session> & { tok
             'Authorization': `Bearer ${session.token.access_token}`
         }
     })
-    const data = await res.json();
-    return data
+    return res
 }
 
 export type MelodySession = Partial<Session> & { token: { access_token: string } & JWT };

@@ -20,7 +20,7 @@ export default function Home() {
           })
         }}
       >
-        test
+        Sign in with Spotify
       </Button>
     </div>
   );
