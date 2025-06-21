@@ -8,7 +8,6 @@ interface UpdatedSession {
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  debug: true,
   providers: [
     Spotify({
       authorization: {

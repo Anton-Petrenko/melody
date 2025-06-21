@@ -1,14 +1,13 @@
 "use server"
 
-import { auth } from "@/auth";
-import { spotifyAPI, MelodySession } from "@/lib/SpotifyAPI";
-import { RecentlyPlayedTracks } from "@/lib/SpotifyAPITypes";
 import Song from "./Song";
+import { spotifyAPI } from "@/lib/SpotifyAPI";
+import { RecentlyPlayedTracks } from "@/lib/SpotifyAPITypes";
 
 export default async function RateRecommendations() {
-
-    const session = await auth();
-    if (!session) {
+    
+    const res = await spotifyAPI("https://api.spotify.com/v1/me/player/recently-played");
+    if (!res) {
         return (
             <div className="flex flex-col justify-center items-center w-full h-20 opacity-50">
                 <p>Spotify authentication not found.</p>
@@ -17,7 +16,6 @@ export default async function RateRecommendations() {
         )
     }
 
-    const res = await spotifyAPI("https://api.spotify.com/v1/me/player/recently-played", session as MelodySession);
     if (res.status != 200) {
         return (
             <div className="flex flex-col justify-center items-center w-full h-20 opacity-50">

@@ -1,6 +1,8 @@
-import NavigationBar from "@/components/NavigationBar";
 import { Metadata } from "next";
 import { Manrope } from "next/font/google";
+import { SessionProvider } from "next-auth/react";
+import NavigationBar from "@/components/NavigationBar";
+import { AudioPlayerProvider } from "@/providers/AudioPlayerProvider";
 
 const defaultFont = Manrope({ subsets: ["latin"], weight: ["200", "300", "400", "500", "600", "700", "800"] });
 
@@ -16,9 +18,13 @@ export default function HomeLayout({ children, }: Readonly<{ children: React.Rea
                 className={`${defaultFont.className} antialiased dark`}
             >
                 <NavigationBar>
-                    <div className="w-xl mx-auto my-2">
-                        {children}
-                    </div>
+                    <SessionProvider>
+                        <AudioPlayerProvider>
+                            <div className="sm:w-xl w-fit mx-auto my-2 px-2 sm:px-0">
+                                {children}
+                            </div>
+                        </AudioPlayerProvider>
+                    </SessionProvider>
                 </NavigationBar>
             </body>
         </html>
