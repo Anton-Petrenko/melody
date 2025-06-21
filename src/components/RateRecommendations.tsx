@@ -6,7 +6,7 @@ import { RecentlyPlayedTracks } from "@/lib/SpotifyAPITypes";
 
 export default async function RateRecommendations() {
     
-    const res = await spotifyAPI("https://api.spotify.com/v1/me/player/recently-played");
+    const res = await spotifyAPI("https://api.spotify.com/v1/me/player/recently-played?limit=50");
     if (!res) {
         return (
             <div className="flex flex-col justify-center items-center w-full h-20 opacity-50">
@@ -17,6 +17,8 @@ export default async function RateRecommendations() {
     }
 
     if (res.status != 200) {
+        const data = await res.json()
+        console.warn(data)
         return (
             <div className="flex flex-col justify-center items-center w-full h-20 opacity-50">
                 <p>There was an error fetching your catalog.</p>

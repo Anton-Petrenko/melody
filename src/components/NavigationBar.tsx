@@ -25,7 +25,9 @@ export default function NavigationBar({ children, }: Readonly<{ children: React.
 
     return (
         <div className="h-[100dvh]">
-            <Navbar>
+            <Navbar
+                className="bg-[#121212]"
+            >
                 <NavbarBrand>
                     <MelodyLogo/>
                 </NavbarBrand>
