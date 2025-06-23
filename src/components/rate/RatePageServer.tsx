@@ -1,12 +1,12 @@
 "use server"
 
-import Song from "./Song";
+import Song from "../Song";
 import { spotifyAPI } from "@/lib/SpotifyAPI";
 import { RecentlyPlayedTracks } from "@/lib/SpotifyAPITypes";
 
-export default async function RateRecommendations() {
+export default async function RatePageServer() {
     
-    const res = await spotifyAPI("https://api.spotify.com/v1/me/player/recently-played?limit=50");
+    const res = await spotifyAPI("https://api.spotify.com/v1/me/player/recently-played?limit=30");
     if (!res) {
         return (
             <div className="flex flex-col justify-center items-center w-full h-20 opacity-50">
@@ -27,11 +27,20 @@ export default async function RateRecommendations() {
         )
     }
 
-    const recentlyPlayed = await res.json() as RecentlyPlayedTracks;
+    const data = (await res.json() as RecentlyPlayedTracks);
+    const seen = new Set<string>()
+    const recentlyPlayed = data.items.filter(obj => {
+        if (seen.has(obj.track.id)) return false
+        else {
+            seen.add(obj.track.id)
+            return true
+        }
+    })
+
     return (
         <div className="flex flex-col gap-2">
             {
-                recentlyPlayed.items.map((song, i) => (
+                recentlyPlayed.map((song, i) => (
                     <Song key={`${song.track.id}${i}`} song={song.track} />
                 ))
             }

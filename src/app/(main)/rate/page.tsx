@@ -2,7 +2,8 @@
 
 import { Suspense } from "react"
 import SpinnerWrapper from "@/components/SpinnerWrapper"
-import RateRecommendations from "@/components/RateRecommendations"
+import RatePageServer from "@/components/rate/RatePageServer"
+import RatePageScrolling from "@/components/rate/RatePageScrolling"
 
 export default async function Home() {
     return (
@@ -10,7 +11,8 @@ export default async function Home() {
             <h2>Rate Songs</h2>
             <p className="mb-4">We generated a catalog for you:</p>
             <Suspense fallback={<SpinnerWrapper/>}>
-                <RateRecommendations/>
+                <RatePageServer/>
+                <RatePageScrolling/>
             </Suspense>
         </div>
     )

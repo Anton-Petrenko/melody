@@ -128,7 +128,7 @@ export interface SpotifyTrack {
     /** The Spotify URI for the track. */
     uri: string
     /** Whether or not the track is from a local file. */
-    local_file: string
+    is_local: boolean
 }
 
 interface SpotifyAPIPlayHistoryObject {
@@ -162,4 +162,21 @@ export interface RecentlyPlayedTracks {
     /** The total number of items available to return. */
     total: number
     items: SpotifyAPIPlayHistoryObject[]
+}
+
+/** The current user's top artists or tracks based on calculated affinity. */
+export interface TopTracks {
+    /** A link to the Web API endpoint returning the full result of the request */
+    href: string
+    /** The maximum number of items in the response (as set in the query or by default). */
+    limit: number
+    /** URL to the next page of items. */
+    url: string | null
+    /** The offset of the items returned (as set in the query or by default) */
+    offset: number
+    /** URL to the previous page of items. */
+    previous: string | null
+    /** The total number of items available to return. */
+    total: number
+    items: SpotifyTrack[]
 }

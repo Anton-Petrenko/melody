@@ -26,7 +26,7 @@ export default function NavigationBar({ children, }: Readonly<{ children: React.
     return (
         <div className="h-[100dvh]">
             <Navbar
-                className="bg-[#121212]"
+                className="bg-[#121212] fixed z-50"
             >
                 <NavbarBrand>
                     <MelodyLogo/>
@@ -51,6 +51,7 @@ export default function NavigationBar({ children, }: Readonly<{ children: React.
                     </NavbarItem>
                 </NavbarContent>
             </Navbar>
+            <div className="h-[4rem]"/>
             <div className="overflow-y-scroll">
                 {children}
             </div>

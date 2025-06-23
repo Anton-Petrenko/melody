@@ -5,7 +5,7 @@ import { Spinner } from "@heroui/react";
 export default function SpinnerWrapper() {
     return (
         <div className="w-full h-20 flex justify-center">
-            <Spinner variant="spinner"/>
+            <Spinner variant="dots"/>
         </div>
     )
 }

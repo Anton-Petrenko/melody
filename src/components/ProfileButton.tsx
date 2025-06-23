@@ -48,7 +48,7 @@ function ProfileButton_AUTH({ session }: { session: SessionContextValue }) {
         <Dropdown>
             <DropdownTrigger>
                 <Avatar
-                    src={(session.data?.user?.image ? session.data?.user?.image : undefined)}
+                    src={(session.data?.user?.image ? session.data.user.image : undefined)}
                 />
             </DropdownTrigger>
             <DropdownMenu

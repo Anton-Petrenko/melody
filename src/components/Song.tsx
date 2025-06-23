@@ -2,17 +2,20 @@
 
 import Image from "next/image"
 import { useContext } from "react"
-import { SpotifyTrack } from "@/lib/SpotifyAPITypes"
-import { AudioPlayerContext } from "@/providers/AudioPlayerProvider"
+import { IoIosStar } from "react-icons/io"
 import { FaPause, FaPlay } from "react-icons/fa6"
+import { SpotifyTrack } from "@/lib/SpotifyAPITypes"
+import { RaterContext } from "@/providers/RaterProvider"
+import { AudioPlayerContext } from "@/providers/AudioPlayerProvider"
 
-export default function Song({ song }: { song: SpotifyTrack }) {
+export default function Song({ song, image_size = 16, rate = true }: { song: SpotifyTrack, image_size?: number, rate?: boolean }) {
 
+    const rater = useContext(RaterContext);
     const audioPlayer = useContext(AudioPlayerContext);
 
     return (
         <div className="w-full flex gap-2 items-center relative">
-            <div className="w-16 h-16 relative shrink-0">
+            <div className={`w-${image_size} h-${image_size} relative shrink-0`}>
                 <Image 
                     src={song.album.images.length > 0 ? song.album.images[0].url : "/images/defaultcoverart.png"}
                     alt={`${song.name} by ${song.artists.map((artist) => artist.name).join(", ")}`}
@@ -28,7 +31,23 @@ export default function Song({ song }: { song: SpotifyTrack }) {
                     <p className="opacity-50">{song.artists.map(artist => artist.name).join(", ")} &#x2022; {song.album.name}</p>
                 </div>
             </div>
-            <div className="shrink-0">
+            <div className="shrink-0 flex">
+                {
+                    rate &&
+                    <div
+                        className="rounded-full flex items-center justify-center px-2"
+                        onClick={() => {
+                            rater.setSong(song)
+                            rater.open(true)
+                        }}
+                    >
+                        <IoIosStar
+                            color="#6e6e6e"
+                            size="20px"
+                            className="hover:scale-125 duration-100 hover:fill-[#ecc56b] hover:animate-pulse cursor-pointer"
+                        />
+                    </div>
+                }
                 <div
                     onClick={async () => {
 
@@ -48,25 +67,25 @@ export default function Song({ song }: { song: SpotifyTrack }) {
                         songToPlay.preview_url = data.preview_link
                         audioPlayer.play(songToPlay)
                     }}
-                    className="w-10 h-10 cursor-pointer bg-[#eeeeee] rounded-full flex items-center justify-center"
+                    className="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center"
                 >
                     {
                         audioPlayer.song ? (
                             audioPlayer.song.id === song.id ? (
                                 audioPlayer.playing ?
-                                <FaPause color="#212121" />
+                                <FaPause color="white" />
                                 :
                                 <div className="translate-x-[1px]">
-                                    <FaPlay color="#212121" />
+                                    <FaPlay color="white" />
                                 </div>
                             ) : (
                                 <div className="translate-x-[1px]">
-                                    <FaPlay color="#212121" />
+                                    <FaPlay color="white" />
                                 </div>
                             )
                         ) :
                         <div className="translate-x-[1px]">
-                            <FaPlay color="#212121" />
+                            <FaPlay color="white" />
                         </div>
                     }
                 </div>

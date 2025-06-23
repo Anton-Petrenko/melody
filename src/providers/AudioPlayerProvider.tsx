@@ -4,12 +4,13 @@ import AudioPlayer from "@/components/AudioPlayer";
 import { SpotifyTrack } from "@/lib/SpotifyAPITypes";
 import { createContext, Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
-export const AudioPlayerContext = createContext<AudioPlayer>({} as AudioPlayer);
+export const AudioPlayerContext = createContext<AudioPlayerContext>({} as AudioPlayerContext);
 
 export function AudioPlayerProvider ({ children }: Readonly<{ children: React.ReactNode; }>) {
 
     const jukebox = useRef<HTMLAudioElement | null>(null);
 
+    const [volume, set_volume] = useState<number>(1);
     const [playing, setPlaying] = useState<boolean>(false);
     const [song, play] = useState<SpotifyTrack | null>(null);
     const [playback_time, setPlaybackTime] = useState<number>(0);
@@ -39,11 +40,15 @@ export function AudioPlayerProvider ({ children }: Readonly<{ children: React.Re
         const handleTimeUpdate = () => {
             setPlaybackTime(audio.currentTime)
         }
+        const handleVolumeChange = () => {
+            set_volume(audio.volume)
+        }
         audio.addEventListener('ended', handleEnded)
         audio.addEventListener('play', handlePlay)
         audio.addEventListener('pause', handlePause)
         audio.addEventListener('loadedmetadata', handleLoadedMetadata)
         audio.addEventListener('timeupdate', handleTimeUpdate)
+        audio.addEventListener('volumechange', handleVolumeChange)
 
         return () => {
             audio.removeEventListener('ended', handleEnded)
@@ -51,6 +56,7 @@ export function AudioPlayerProvider ({ children }: Readonly<{ children: React.Re
             audio.removeEventListener('pause', handlePause)
             audio.removeEventListener('loadedmetadata', handleLoadedMetadata)
             audio.removeEventListener('timeupdate', handleTimeUpdate)
+            audio.removeEventListener('volumechange', handleVolumeChange)
         }
         
     }, [])
@@ -66,6 +72,14 @@ export function AudioPlayerProvider ({ children }: Readonly<{ children: React.Re
         jukebox.current.play()
 
     }, [song])
+
+    useEffect(() => {
+        if (!jukebox.current) {
+            console.warn("There was an error changing the volume of the player.")
+            return
+        }
+        jukebox.current.volume = volume
+    }, [volume])
 
     const pause = () => {
         if (!jukebox.current) {
@@ -107,22 +121,24 @@ export function AudioPlayerProvider ({ children }: Readonly<{ children: React.Re
             resume,
             duration,
             playback_time,
-            skip_to
+            skip_to,
+            volume,
+            set_volume
         }}>
             <audio ref={jukebox} />
             {children}
             {
                 song &&
-                <>
+                <div className="z-50">
                     <div className="h-16" />
                     <AudioPlayer/>
-                </>
+                </div>
             }
         </AudioPlayerContext>
     )
 }
 
-interface AudioPlayer {
+interface AudioPlayerContext {
     /** The current song loaded onto the player */
     song: SpotifyTrack | null
     /** Play a song via a SpotifyTrack object (NOTE: preview_url must be populated) */
@@ -139,4 +155,8 @@ interface AudioPlayer {
     playback_time: number
     /** Skips the song to a specified number of seconds */
     skip_to: (seconds: number) => void
+    /** The current volume of the audio */
+    volume: number
+    /** Set the current volume of the audio */
+    set_volume: Dispatch<SetStateAction<number>>
 }
