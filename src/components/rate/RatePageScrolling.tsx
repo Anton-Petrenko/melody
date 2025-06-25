@@ -33,13 +33,14 @@ export default function RatePageScrolling() {
             if (target.isIntersecting) {
                 const new_data = await load(call)
                 if (!new_data) return
+                const all_data = songs.concat(new_data.items)
                 const seen = new Set<string>()
-                const data = new_data.items.filter(obj => {
+                const data = all_data.filter(obj => {
                     if (seen.has(obj.id)) return false
                     seen.add(obj.id)
                     return true
                 })
-                setSongs(prev => [...prev, ...data])
+                setSongs(data)
                 setCall(call + 1)
             }
         },{
@@ -73,7 +74,7 @@ export default function RatePageScrolling() {
             }
         }
 
-    }, [call, session.data, session.status])
+    }, [call, session.data, session.status, songs])
 
     return (
         <div>

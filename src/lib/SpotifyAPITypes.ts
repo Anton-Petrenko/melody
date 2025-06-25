@@ -180,3 +180,41 @@ export interface TopTracks {
     total: number
     items: SpotifyTrack[]
 }
+
+/** Detailed profile information about the current user (including the current user's username). */
+export interface SpotifyAPIUser {
+    /** The country of the user, as set in the user's account profile. An ISO 3166-1 alpha-2 country code. This field is only available when the current user has granted access to the user-read-private scope. */
+    country?: string
+    /** The name displayed on the user's profile. null if not available. */
+    display_name: string | null
+    /** The user's email address, as entered by the user when creating their account. Important! This email address is unverified; there is no proof that it actually belongs to the user. This field is only available when the current user has granted access to the user-read-email scope. */
+    email: string
+    /** The user's explicit content settings. This field is only available when the current user has granted access to the user-read-private scope. */
+    explicit_content?: {
+        /** When true, indicates that explicit content should not be played. */
+        filter_enabled?: boolean
+        /** When true, indicates that the explicit content setting is locked and can't be changed by the user. */
+        filter_locked?: boolean
+    }
+    /** Known external URLs for this user. */
+    external_urls: SpotifyExternalURLS
+    /** Information about the followers of the user. */
+    followers: {
+        /** This will always be set to null, as the Web API does not support it at the moment. */
+        href: null
+        /** The total number of followers. */
+        total: number
+    }
+    /** A link to the Web API endpoint for this user. */
+    href: string
+    /** The Spotify user ID for the user. */
+    id: string
+    /** The user's profile image. */
+    image: SpotifyImage[]
+    /** The user's Spotify subscription level: "premium", "free", etc. (The subscription level "open" can be considered the same as "free".) This field is only available when the current user has granted access to the user-read-private scope. */
+    product?: string
+    /** The object type: "user" */
+    type: string
+    /** The Spotify URI for the user. */
+    uri: string
+}

@@ -1,0 +1,20 @@
+{
+    "user_track_ratings_bad": {
+        "id_user": "TEXT NOT NULL",
+        "id_track": "TEXT NOT NULL",
+        "elo_rating": "FLOAT NOT NULL DEFAULT 1500",
+        "PRIMARY_KEY": "(id_user, id_track)"
+    },
+    "user_track_ratings_ok": {
+        "id_user": "TEXT NOT NULL",
+        "id_track": "TEXT NOT NULL",
+        "elo_rating": "FLOAT NOT NULL DEFAULT 1500",
+        "PRIMARY_KEY": "(id_user, id_track)"
+    },
+    "user_track_ratings_good": {
+        "id_user": "TEXT NOT NULL",
+        "id_track": "TEXT NOT NULL",
+        "elo_rating": "FLOAT NOT NULL DEFAULT 1500",
+        "PRIMARY_KEY": "(id_user, id_track)"
+    }
+}

@@ -8,14 +8,14 @@ import { SpotifyTrack } from "@/lib/SpotifyAPITypes"
 import { RaterContext } from "@/providers/RaterProvider"
 import { AudioPlayerContext } from "@/providers/AudioPlayerProvider"
 
-export default function Song({ song, image_size = 16, rate = true }: { song: SpotifyTrack, image_size?: number, rate?: boolean }) {
+export default function Song({ song, image_size = 64, rate = true }: { song: SpotifyTrack, image_size?: number, rate?: boolean }) {
 
     const rater = useContext(RaterContext);
     const audioPlayer = useContext(AudioPlayerContext);
 
     return (
         <div className="w-full flex gap-2 items-center relative">
-            <div className={`w-${image_size} h-${image_size} relative shrink-0`}>
+            <div className="relative shrink-0" style={{ width: `${image_size}px`, height: `${image_size}px` }}>
                 <Image 
                     src={song.album.images.length > 0 ? song.album.images[0].url : "/images/defaultcoverart.png"}
                     alt={`${song.name} by ${song.artists.map((artist) => artist.name).join(", ")}`}

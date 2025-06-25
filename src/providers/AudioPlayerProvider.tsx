@@ -69,7 +69,13 @@ export function AudioPlayerProvider ({ children }: Readonly<{ children: React.Re
         }
 
         jukebox.current.src = song.preview_url as string
-        jukebox.current.play()
+
+        try {
+            jukebox.current.play()
+        } catch {
+            console.warn("There was an error loading the song.")
+            play(null)
+        }
 
     }, [song])
 

@@ -22,4 +22,4 @@ export async function spotifyAPI (url: string): Promise<Response | null> {
     return res
 }
 
-export type MelodySession = Partial<Session> & { token: { access_token: string } & JWT };
+export type MelodySession = Partial<Session> & { token: { access_token: string, spotify_id: string } & JWT };

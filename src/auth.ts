@@ -1,6 +1,7 @@
 import { JWT } from "next-auth/jwt"
-import NextAuth, { Session } from "next-auth"
 import Spotify from "next-auth/providers/spotify"
+import NextAuth, { Session } from "next-auth"
+import { SpotifyAPIUser } from "./lib/SpotifyAPITypes"
 import { AdapterSession, AdapterUser } from "@auth/core/adapters"
 
 interface UpdatedSession {
@@ -20,7 +21,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     async jwt({ token, account }) {
-      if (account) {
+      if (account && !token.spotify_id) {
+        const res = await fetch("https://api.spotify.com/v1/me", {
+          headers: {
+            'Authorization': `Bearer ${account.access_token}`
+          }
+        })
+        const data = await res.json() as SpotifyAPIUser
+        token.spotify_id = data.id
         token.access_token = account.access_token
       }
       return token
