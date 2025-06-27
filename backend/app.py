@@ -1,12 +1,16 @@
+import os
 import util
 import psycopg2
 from flask_cors import CORS
+from dotenv import load_dotenv
 from flask import Flask, jsonify, request
 
-app = Flask(__name__)
-CORS(app, origins=["http://localhost:3000"])
+load_dotenv()
 
-conn = psycopg2.connect("postgresql://postgres:xTPzJjnKNyJTVdDYAafSbduKlnTNceET@crossover.proxy.rlwy.net:14315/railway")
+app = Flask(__name__)
+CORS(app, origins=[f"http://{os.environ.get("FRONTEND_URL")}:{os.environ.get("FRONTEND_PORT")}"])
+
+conn = psycopg2.connect(os.environ.get("DATABASE_URL"))
 
 @app.route("/ratings", methods=["GET", "POST"])
 def ratings():

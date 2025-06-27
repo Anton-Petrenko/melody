@@ -1,6 +1,7 @@
 'use server'
 
 import GetAuth from "@/lib/GetAuth";
+import MelodyLogo from "@/components/images/MelodyLogo";
 
 export default async function Home() {
     const session = await GetAuth();
@@ -18,7 +19,16 @@ export default async function Home() {
 
 const Home_AUTH = () => {
     return (
-        <p>You are authenticated!</p>
+        <div className="flex flex-col items-center gap-2">
+            <MelodyLogo/>
+            <p>Welcome to Melody!</p>
+            <p className="text-sm opacity-50">
+                Melody is an active open-source project maintained by Anton Petrenko.
+                <br/>
+                Visit the github repository by clicking <a href="https://github.com/Anton-Petrenko/melody" className="text-lime-300" target="_blank">here.</a>
+            </p>
+            <p>To get started, click on the thumbs button on the navigation bar!</p>
+        </div>
     )
 }
 

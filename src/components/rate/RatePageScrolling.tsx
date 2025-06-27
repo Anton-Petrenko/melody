@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react"
 import { MelodySession } from "@/lib/SpotifyAPI"
 import { SpotifyTrack, TopTracks } from "@/lib/SpotifyAPITypes"
 import { useEffect, useRef, useState } from "react"
-import Song from "../Song"
+import Song from "../song/Song"
 import MelodyLogo from "../images/MelodyLogo"
 
 const LOAD_ORDER = [

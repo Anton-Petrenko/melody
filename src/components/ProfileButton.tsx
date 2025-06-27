@@ -64,6 +64,7 @@ function ProfileButton_AUTH({ session }: { session: SessionContextValue }) {
                         <DropdownItem 
                             key={option.key}
                             className={option.className}
+                            isReadOnly={option.key === "profile" ? true : false}
                         >
                             {option.text}
                         </DropdownItem>

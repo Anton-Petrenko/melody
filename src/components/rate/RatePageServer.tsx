@@ -1,6 +1,6 @@
 "use server"
 
-import Song from "../Song";
+import Song from "../song/Song";
 import { spotifyAPI } from "@/lib/SpotifyAPI";
 import { RecentlyPlayedTracks } from "@/lib/SpotifyAPITypes";
 

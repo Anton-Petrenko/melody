@@ -1,6 +1,10 @@
+import os
 import psycopg2
+from dotenv import load_dotenv
 
-conn = psycopg2.connect("postgresql://postgres:xTPzJjnKNyJTVdDYAafSbduKlnTNceET@crossover.proxy.rlwy.net:14315/railway")
+load_dotenv()
+
+conn = psycopg2.connect(os.environ.get("DATABASE_URL"))
 db = conn.cursor()
 
 

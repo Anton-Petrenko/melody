@@ -21,7 +21,7 @@ export async function GET() {
         })
     }
 
-    const res = await fetch(`http://localhost:5001/ratings?user=${session.token.spotify_id}`)
+    const res = await fetch(`http://${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}/ratings?user=${session.token.spotify_id}`)
     const data = await res.json()
     return NextResponse.json(data)
 }
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
         })
     }
 
-    const res = await fetch(`http://localhost:5001/ratings?user=${session.token.spotify_id}`,
+    const res = await fetch(`http://${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}/ratings?user=${session.token.spotify_id}`,
         {
             method: "POST",
             headers: {

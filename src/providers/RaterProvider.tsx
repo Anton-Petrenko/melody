@@ -1,19 +1,15 @@
 'use client'
 
 import Image from "next/image"
-import Song from "@/components/Song"
 import { Button } from "@heroui/react"
+import Song from "@/components/song/Song"
 import { get_rating } from "@/lib/Melody"
+import { BsEmojiNeutral } from "react-icons/bs"
 import { SpotifyTrack } from "@/lib/SpotifyAPITypes"
 import { MelodyUserRatings } from "@/lib/MelodyTypes"
+import SongSkeleton from "@/components/song/SongSkeleton"
 import { IoMdThumbsDown, IoMdThumbsUp } from "react-icons/io"
 import { createContext, Dispatch, SetStateAction, useEffect, useState } from "react"
-
-const RATER_CATEGORIES = [
-    "I don't like it",
-    "It's okay",
-    "I like this song!"
-]
 
 export const RaterContext = createContext<RaterProviderContext>({} as RaterProviderContext)
 
@@ -28,6 +24,7 @@ export function RaterProvider({ children }: Readonly<{ children: React.ReactNode
     const [ratings, setRatings] = useState<MelodyUserRatings | null>(null);
     const [song_opponent, setOpponent] = useState<SpotifyTrack | null>(null);
     const [rater_category, setRaterCategory] = useState<number | null>(null);
+    const [loading_opponent, setLoadingOpponent] = useState<boolean | null>(null);
 
     const [lo, setLo] = useState<number | null>(null);
     const [mid, setMid] = useState<number | null>(null);
@@ -49,6 +46,7 @@ export function RaterProvider({ children }: Readonly<{ children: React.ReactNode
             setDone(false)
             setRaterCategory(null)
             setOpponent(null)
+            setSubmittable(false)
             document.body.classList.remove('overflow-hidden')
             return
         }
@@ -71,7 +69,7 @@ export function RaterProvider({ children }: Readonly<{ children: React.ReactNode
         const new_lo = 0
         const new_hi = ratings[key].length
         const new_mid = Math.floor((new_lo+new_hi) / 2)
-
+    
         serve_opponent(ratings[key][new_mid])
 
         setLo(new_lo)
@@ -117,8 +115,10 @@ export function RaterProvider({ children }: Readonly<{ children: React.ReactNode
     }
 
     const serve_opponent = async (id: string) => {
+        setLoadingOpponent(true)
         const opp = await fetch_song(id)
         setOpponent(opp)
+        setLoadingOpponent(false)
     }
 
     const sync_ratings = async (ratings: MelodyUserRatings) => {
@@ -187,8 +187,8 @@ export function RaterProvider({ children }: Readonly<{ children: React.ReactNode
                                         <header className="py-4 px-6 flex-initial text-large font-semibold flex flex-col gap-1">
                                             <p className="truncate">Rate Song</p>
                                         </header>
-                                        <div className="flex flex-1 flex-col gap-3 px-6 py-2">
-                                            <div className="flex justify-around">
+                                        <div className="flex flex-1 flex-col px-6 py-2">
+                                            <div className="flex justify-around mb-4">
                                                 <div 
                                                     className="w-[25%] duration-75 hover:bg-red-500/20 border border-red-500 h-[5rem] flex items-center justify-center rounded-lg cursor-pointer"
                                                     style={{ backgroundColor: `${rater_category === 0 ? '#b7262e' : ''}`, scale: `${rater_category === 0 ? '1.05' : '1'}` }}
@@ -204,7 +204,9 @@ export function RaterProvider({ children }: Readonly<{ children: React.ReactNode
                                                     style={{ backgroundColor: `${rater_category === 1 ? '#af8308' : ''}`, scale: `${rater_category === 1 ? '1.05' : '1'}` }}
                                                     onClick={() => handleCategoryChange(1)}
                                                 >
-                                                    <p className="text-4xl">&#8212;</p>
+                                                    <BsEmojiNeutral
+                                                        size="36px"
+                                                    />
                                                 </div>
                                                 <div 
                                                     className="w-[25%] duration-75 hover:bg-green-500/20 border border-green-500 h-[5rem] flex items-center justify-center rounded-lg cursor-pointer"
@@ -217,10 +219,7 @@ export function RaterProvider({ children }: Readonly<{ children: React.ReactNode
                                                     />
                                                 </div>
                                             </div>
-                                            <div className="flex items-center justify-center">
-                                                <p className="text-sm">{rater_category != null ? RATER_CATEGORIES[rater_category] : 'Did you like the song?'}</p>
-                                            </div>
-                                            <div className="text-sm relative flex items-center justify-center group p-2">
+                                            <div className="text-sm relative flex items-center justify-center group p-2 mb-2">
                                                 <div className="absolute w-full h-full group-hover:bg-[#303030] rounded-lg duration-150" />
                                                 <Song song={song} image_size={40} rate={false} show_rating={false} />
                                                 <div className="absolute w-[87%] h-full left-0 cursor-pointer" 
@@ -228,24 +227,35 @@ export function RaterProvider({ children }: Readonly<{ children: React.ReactNode
                                                 />
                                             </div>
                                             {
-                                                song_opponent &&
+                                                loading_opponent ? 
                                                 <div className="text-sm relative flex items-center justify-center group p-2">
-                                                    <div className="absolute w-full h-full group-hover:bg-[#303030] rounded-lg duration-150" />
-                                                    <Song song={song_opponent} image_size={40} rate={false} show_rating={false} />
-                                                    <div className="absolute w-[87%] h-full left-0 cursor-pointer" 
-                                                        onClick={() => handleWinner(song_opponent.id)}
-                                                    />
+                                                    <SongSkeleton image_size={40}/>
                                                 </div>
+                                                : (
+                                                    song_opponent ?
+                                                    <div className="text-sm relative flex items-center justify-center group p-2">
+                                                        <div className="absolute w-full h-full group-hover:bg-[#303030] rounded-lg duration-150" />
+                                                        <Song song={song_opponent} image_size={40} rate={false} show_rating={false} />
+                                                        <div className="absolute w-[87%] h-full left-0 cursor-pointer" 
+                                                            onClick={() => handleWinner(song_opponent.id)}
+                                                        />
+                                                    </div>
+                                                    :
+                                                    <div className="flex items-center justify-center h-[56px] p-2">
+                                                        <p className="opacity-70">{submittable ? `Your first song in this category!` : `Choose a category`}</p>
+                                                    </div>
+                                                )
                                             }
                                         </div>
                                         <footer className="flex flex-row gap-2 px-6 py-4 justify-center">
                                             <Button
+                                                color="secondary"
                                                 fullWidth={true}
                                                 isLoading={syncing}
                                                 isDisabled={!submittable}
                                                 onPress={handleSubmit}
                                             >
-                                                Rate
+                                                Finish Rating
                                             </Button>
                                         </footer>
                                     </div>
