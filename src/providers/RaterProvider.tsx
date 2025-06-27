@@ -1,7 +1,9 @@
 'use client'
 
+import Image from "next/image"
 import Song from "@/components/Song"
 import { Button } from "@heroui/react"
+import { get_rating } from "@/lib/Melody"
 import { SpotifyTrack } from "@/lib/SpotifyAPITypes"
 import { MelodyUserRatings } from "@/lib/MelodyTypes"
 import { IoMdThumbsDown, IoMdThumbsUp } from "react-icons/io"
@@ -22,6 +24,7 @@ export function RaterProvider({ children }: Readonly<{ children: React.ReactNode
     const [syncing, setSyncing] = useState<boolean>(false);
     const [song, setSong] = useState<SpotifyTrack | null>(null);
     const [submittable, setSubmittable] = useState<boolean>(false);
+    const [song_rating, setSongRating] = useState<number | null>(null);
     const [ratings, setRatings] = useState<MelodyUserRatings | null>(null);
     const [song_opponent, setOpponent] = useState<SpotifyTrack | null>(null);
     const [rater_category, setRaterCategory] = useState<number | null>(null);
@@ -107,6 +110,7 @@ export function RaterProvider({ children }: Readonly<{ children: React.ReactNode
         new_ratings[["bad", "ok", "good"][rater_category]].splice(submit_lo, 0, song.id)
         await sync_ratings(new_ratings)
         setRatings(new_ratings)
+        setSongRating(get_rating(new_ratings, song))
 
         setSyncing(false)
         setDone(true)
@@ -151,18 +155,38 @@ export function RaterProvider({ children }: Readonly<{ children: React.ReactNode
                                     <path d="M18 6L6 18M6 6l12 12"></path>
                                 </svg>
                             </button>
-                            <header className="py-4 px-6 flex-initial text-large font-semibold flex flex-col gap-1">
-                                <p className="truncate">Rate Song</p>
-                            </header>
-                                {   done_rating ?
-                                    <div className="flex flex-1 flex-col gap-3 px-6 py-2">
-                                        <p>testing</p>
-                                        <footer className="flex flex-row gap-2 px-6 py-4 justify-center">
-                                            <p>yup</p>
-                                        </footer>
+                                {   done_rating && ratings ?
+                                    <div>
+                                        <header className="py-4 px-6 flex-initial text-large font-semibold flex flex-col gap-1">
+                                            <p className="truncate">Your song is rated! &#127881;</p>
+                                        </header>
+                                        <div className="flex flex-1 flex-col gap-3 px-6 py-2 items-center">
+                                            <div className="w-[10rem] h-[10rem] flex items-center justify-center relative">
+                                                <div className="absolute w-full h-full -z-10">
+                                                    <Image
+                                                        fill={true}
+                                                        alt={`${song.name} by ${song.artists.map((artist) => artist.name).join(", ")}`}
+                                                        src={(song.album && song.album.images.length > 0) ? song.album.images[0].url : "/images/defaultcoverart.png"}
+                                                        className="rounded-lg"
+                                                    />
+                                                </div>
+                                                <div className="w-[7rem] h-[7rem] flex items-center justify-center rounded-full shadow-small" style={{ background: song_rating ? (song_rating < 3.45 ? 'linear-gradient(45deg, #a9674d, #834127, #e7a58b 70%, #9b593f)' : (song_rating < 6.45 ? 'linear-gradient(45deg, #E0E0E0, #FCFCFC, #ADADAD 70%, #CECECE)' : 'linear-gradient(45deg, #BF953F, #FCF6BA, #B38728 70%, #FBF5B7)') ) : '' }}>
+                                                    <p className="text-5xl font-bold text-shadow-md" style={{ color: song_rating ? (song_rating < 3.45 ? '#391D11' : (song_rating < 6.45 ? '#5e5e5e' : '#644b17') ) : '' }}>{ song_rating && song_rating.toFixed(1) }</p>
+                                                </div>
+                                            </div>
+                                            <div className="flex flex-col justify-center items-center text-center">
+                                                <p className="font-bold opacity-70 text-sm">{song.artists.map(artist => artist.name).join(", ")}</p>
+                                                <p className="font-bold text-lg">{song.name}</p>
+                                            </div>
+                                            <footer className="flex flex-row gap-2 px-6 py-2 justify-center">
+                                            </footer>
+                                        </div>
                                     </div>
                                     :
                                     <div>
+                                        <header className="py-4 px-6 flex-initial text-large font-semibold flex flex-col gap-1">
+                                            <p className="truncate">Rate Song</p>
+                                        </header>
                                         <div className="flex flex-1 flex-col gap-3 px-6 py-2">
                                             <div className="flex justify-around">
                                                 <div 

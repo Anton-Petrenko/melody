@@ -2,41 +2,21 @@
 
 import Image from "next/image"
 import { useContext } from "react"
+import { get_rating } from "@/lib/Melody"
 import { IoIosStar } from "react-icons/io"
 import { FaPause, FaPlay } from "react-icons/fa6"
 import { SpotifyTrack } from "@/lib/SpotifyAPITypes"
-import { MelodyUserRatings } from "@/lib/MelodyTypes"
 import { RaterContext } from "@/providers/RaterProvider"
 import { AudioPlayerContext } from "@/providers/AudioPlayerProvider"
-
-const renormalize = (val: number, og_min: number, og_max: number, new_min: number | undefined, new_max: number | undefined): number => {
-    if (!new_min || !new_max) return 0
-    const numerator = ((val - og_min) * (new_max - new_min))
-    const denominator = (og_max - og_min)
-    return new_min + (numerator / denominator)
-}
-
-const get_rating = (ratings: MelodyUserRatings | null, song: SpotifyTrack): number => {
-    if (!ratings) return 0
-    for (const key of ["bad", "ok", "good"]) {
-        const index = ratings[key].findIndex(id => id === song.id)
-        if (index != -1) {
-            return (ratings[key].length === 1 ? { "bad": 2.5, "ok": 5, "good": 7.5 }[key] as number : renormalize(index, -1, ratings[key].length, { "bad": 0, "ok": 3.5, "good": 6.5 }[key], { "bad": 3.4, "ok": 6.4, "good": 9.9 }[key]))
-        }
-    }
-
-    return 0
-
-}
 
 export default function Song({ song, image_size = 64, rate = true, show_rating = true }: { song: SpotifyTrack, image_size?: number, rate?: boolean, show_rating?: boolean }) {
 
     const rater = useContext(RaterContext);
     const audioPlayer = useContext(AudioPlayerContext);
 
-    let song_rating = 0;
+    let song_rating: number | null = 0;
     if (show_rating) {
-        song_rating = get_rating(rater.ratings, song);
+        if (rater.ratings) song_rating = get_rating(rater.ratings, song);
     }
 
     return (
@@ -61,7 +41,7 @@ export default function Song({ song, image_size = 64, rate = true, show_rating =
                 {
                     song_rating ? 
                         <div className="flex items-center justify-center px-2 w-[2rem]">
-                            <p className="opacity-70 text-lg">{song_rating.toFixed(1)}</p>
+                            <p className="opacity-70 text-lg font-bold" style={{ color: song_rating ? (song_rating < 3.45 ? '#b7755b' : (song_rating < 6.45 ? '#ececec' : '#f7c634') ) : '' }}>{song_rating.toFixed(1)}</p>
                         </div>
                     : (
                         rate &&

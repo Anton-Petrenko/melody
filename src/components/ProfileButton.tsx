@@ -46,7 +46,9 @@ function ProfileButton_AUTH({ session }: { session: SessionContextValue }) {
 
     return (
         <Dropdown>
-            <DropdownTrigger>
+            <DropdownTrigger
+                className="cursor-pointer"
+            >
                 <Avatar
                     src={(session.data?.user?.image ? session.data.user.image : undefined)}
                 />
@@ -54,6 +56,7 @@ function ProfileButton_AUTH({ session }: { session: SessionContextValue }) {
             <DropdownMenu
                 onAction={(key) => {
                     if (key === "logout") signOut({ redirect: true, redirectTo: "/" })
+                    // if (key === "profile") router.push(`/profile/${session.}`)
                 }}
             >
                 {
