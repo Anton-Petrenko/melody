@@ -1,25 +1,23 @@
+import GetAuth from "@/lib/GetAuth";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     const fields = await params;
 
-    const res = await fetch(`https://open.spotify.com/track/${fields.id}`)
-    const data = await res.text()
-
-    const index = data.indexOf("https://p.scdn.co/")
-    const preview_link = data.slice(index, index+data.substring(index, index+200).indexOf("\""))
-    if (index === -1 || preview_link === "") {
-        return NextResponse.json(
-            {
-                message: "There was an error fetching the song preview."
-            },
-            {
-                status: 404
-            }
-        )
+    const auth = await GetAuth()
+    if (!auth) {
+        return NextResponse.json({
+            message: "There was an issue with authentication."
+        }, {
+            status: 401
+        })
     }
 
-    return NextResponse.json({
-        preview_link: preview_link
+    const res = await fetch(`https://api.spotify.com/v1/tracks/${fields.id}`, {
+        headers: {
+            "Authorization": `Bearer ${auth.token.access_token}`
+        }
     })
+    const data = await res.json()
+    return NextResponse.json(data)
 }

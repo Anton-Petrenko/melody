@@ -6,26 +6,11 @@ db = conn.cursor()
 
 
 db.execute("""
-    CREATE TABLE user_track_ratings_bad (
-        id_user TEXT NOT NULL,
-        id_track TEXT NOT NULL,
-        elo_rating FLOAT NOT NULL DEFAULT 1500,
-        PRIMARY KEY (id_user, id_track)
-    );
+    DELETE FROM user_track_ratings_bad;
            
-    CREATE TABLE user_track_ratings_ok (
-        id_user TEXT NOT NULL,
-        id_track TEXT NOT NULL,
-        elo_rating FLOAT NOT NULL DEFAULT 1500,
-        PRIMARY KEY (id_user, id_track)
-    );
+    DELETE FROM user_track_ratings_ok;
            
-    CREATE TABLE user_track_ratings_good (
-        id_user TEXT NOT NULL,
-        id_track TEXT NOT NULL,
-        elo_rating FLOAT NOT NULL DEFAULT 1500,
-        PRIMARY KEY (id_user, id_track)
-    );
+    DELETE FROM user_track_ratings_good;
 """)
 conn.commit()
 
