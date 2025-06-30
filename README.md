@@ -2,9 +2,9 @@ Melody is an active open-source music project.
 
 Currently, Melody is only available to be locally run, with plans to host an official Melody for the public in the future. It is also entirely dependent on the Spotify API, for now.
 
-## Project
+# Project
 
-### Spotify
+## Spotify
 
 > [!NOTE]
 > You must have a paid Spotify subscription in order to access the Spotify API.
@@ -16,7 +16,7 @@ user-read-playback-state streaming playlist-read-private user-follow-read user-t
 ```
 3. Copy the .env.template file and copy the client secret and client id of your new spotify app into the corresponding "AUTH_" .env variables.
 
-### Backend
+## Backend
 
 **Database**
 
@@ -44,7 +44,7 @@ py db_exec.py
 py app.py
 ```
 
-### Frontend
+## Frontend
 
 1. In the main project directory, run the following command or run the equivalent command if you have a separate package manager.
 ```
