@@ -10,11 +10,26 @@ db = conn.cursor()
 
 
 db.execute("""
-    DELETE FROM user_track_ratings_bad;
-           
-    DELETE FROM user_track_ratings_ok;
-           
-    DELETE FROM user_track_ratings_good;
+    CREATE TABLE user_track_ratings_bad (
+        id_user TEXT NOT NULL,
+        id_track TEXT NOT NULL,
+        index INTEGER NOT NULL,
+        PRIMARY KEY (id_user, id_track)
+    );
+
+    CREATE TABLE user_track_ratings_ok (
+        id_user TEXT NOT NULL,
+        id_track TEXT NOT NULL,
+        index INTEGER NOT NULL,
+        PRIMARY KEY (id_user, id_track)
+    );
+
+    CREATE TABLE user_track_ratings_good (
+        id_user TEXT NOT NULL,
+        id_track TEXT NOT NULL,
+        index INTEGER NOT NULL,
+        PRIMARY KEY (id_user, id_track)
+    );
 """)
 conn.commit()
 

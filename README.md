@@ -26,15 +26,19 @@ user-read-playback-state streaming playlist-read-private user-follow-read user-t
 
 **Server**
 
-1. Navigate to the /backend directory of the project and create a virtual environment. (optional)
+1. In the .env file in the main project folder, set the BACKEND_URL to 'localhost' and BACKEND_PORT to '5001'.
+2. Navigate to the /backend directory of the project and create a virtual environment. (optional)
 ```
 py -m venv venv
 ```
-2. Install the backend dependencies.
+3. Install the backend dependencies.
 ```
 pip install -r requirements.txt
 ```
-3. In the .env file in the main project folder, set the BACKEND_URL to 'localhost' and BACKEND_PORT to '5001'.
+4. Run the database setup script.
+```
+py db_exec.py
+```
 4. Run the backend.
 ```
 py app.py
