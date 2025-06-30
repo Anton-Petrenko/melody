@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Melody is an active open-source music project.
 
-## Getting Started
+Currently, Melody is only available to be locally run, with plans to host an official Melody for the public in the future. It is also entirely dependent on the Spotify API, for now.
 
-First, run the development server:
+## Project
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### Spotify
+
+> [!NOTE]
+> You must have a paid Spotify subscription in order to access the Spotify API.
+
+1. Go to the [https://developer.spotify.com/](Spotify for Developers) page and log into your account.
+2. Navigate to your dashboard and [https://developer.spotify.com/dashboard/create](create an app) with the following scopes:
+```
+user-read-playback-state streaming playlist-read-private user-follow-read user-top-read user-read-recently-played user-library-read user-read-email
+```
+3. Copy the .env.template file and copy the client secret and client id of your new spotify app into the corresponding "AUTH_" .env variables.
+
+### Backend
+
+**Database**
+
+1. Spin up a PostgreSQL database instance. (I use [https://railway.com/](Railway) for my local development)
+2. Obtain the public connection string to the database.
+3. In the .env file, set DATABASE_URL to the connection string.
+
+**Server**
+
+1. Navigate to the /backend directory of the project and create a virtual environment. (optional)
+```
+py -m venv venv
+```
+2. Install the backend dependencies.
+```
+pip install -r requirements.txt
+```
+3. In the .env file in the main project folder, set the BACKEND_URL to 'localhost' and BACKEND_PORT to '5001'.
+4. Run the backend.
+```
+py app.py
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Frontend
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. In the main project directory, run the following command or run the equivalent command if you have a separate package manager.
+```
+npm i
+```
+2. In the .env file, set AUTH_SECRET to a random 32 character base64 number - you can [https://auth-secret-gen.vercel.app/](generate one here).
+3. In the .env file, set FRONTEND_URL to 'localhost' and FRONTEND_PORT to '3000'.
+3. Now, run the following command to start the frontend locally:
+```
+npm run dev
+```
