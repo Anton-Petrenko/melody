@@ -9,8 +9,8 @@ Currently, Melody is only available to be locally run, with plans to host an off
 > [!NOTE]
 > You must have a paid Spotify subscription in order to access the Spotify API.
 
-1. Go to the [https://developer.spotify.com/](Spotify for Developers) page and log into your account.
-2. Navigate to your dashboard and [https://developer.spotify.com/dashboard/create](create an app) with the following scopes:
+1. Go to the [Spotify for Developers](https://developer.spotify.com/) page and log into your account.
+2. Navigate to your dashboard and [create an app](https://developer.spotify.com/dashboard/create) with the following scopes:
 ```
 user-read-playback-state streaming playlist-read-private user-follow-read user-top-read user-read-recently-played user-library-read user-read-email
 ```
@@ -20,7 +20,7 @@ user-read-playback-state streaming playlist-read-private user-follow-read user-t
 
 **Database**
 
-1. Spin up a PostgreSQL database instance. (I use [https://railway.com/](Railway) for my local development)
+1. Spin up a PostgreSQL database instance. (I use [Railway](https://railway.com/) for my local development)
 2. Obtain the public connection string to the database.
 3. In the .env file, set DATABASE_URL to the connection string.
 
@@ -46,9 +46,10 @@ py app.py
 ```
 npm i
 ```
-2. In the .env file, set AUTH_SECRET to a random 32 character base64 number - you can [https://auth-secret-gen.vercel.app/](generate one here).
+2. In the .env file, set AUTH_SECRET to a random 32 character base64 number - you can [generate one here](https://auth-secret-gen.vercel.app/).
 3. In the .env file, set FRONTEND_URL to 'localhost' and FRONTEND_PORT to '3000'.
 3. Now, run the following command to start the frontend locally:
 ```
 npm run dev
 ```
+
