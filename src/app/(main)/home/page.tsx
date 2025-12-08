@@ -1,17 +1,18 @@
-'use server'
+'use client'
 
-import GetAuth from "@/lib/GetAuth";
+import { authClient } from "@/lib/auth-client";
 import MelodyLogo from "@/components/images/MelodyLogo";
 
-export default async function Home() {
-    const session = await GetAuth();
+export default function Home() {
+    const test = authClient.useSession()
+    
     return (
         <div>
             {
-                session ?
-                <Home_AUTH />
-                :
+                test.error ?
                 <Home_UNAUTH />
+                :
+                <Home_AUTH />
             }
         </div>
     )

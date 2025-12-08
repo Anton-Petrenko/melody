@@ -1,22 +1,33 @@
 'use server'
 
-import GetAuth from "./GetAuth";
+import { auth } from "@/auth"; // path to your Better Auth server instance
+import { headers } from "next/headers";
+
 import { Session } from "next-auth";
 import { JWT } from "next-auth/jwt";
 
 export async function spotifyAPI (url: string): Promise<Response | null> {
-    let access_token = "";
-    
-    const session = await GetAuth();
+
+    const session = await auth.api.getSession({
+        headers: await headers() // you need to pass the headers object.
+    })
+
+    const token = await auth.api.getAccessToken({
+        body: {
+            providerId: "spotify",
+            userId: session?.user.id,
+        }
+    }).then((token) => token.accessToken)
+
+    // const session = await GetAuth();
     if (!session) {
         return null
     }
 
-    access_token = session.token.access_token;
-
     const res = await fetch(url, {
+        method: "GET",
         headers: {
-            'Authorization': `Bearer ${access_token}`
+            'Authorization': `Bearer ${token}`
         }
     })
     return res

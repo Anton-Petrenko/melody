@@ -12,9 +12,9 @@ CORS(app, origins=[f"http://{os.environ.get("FRONTEND_URL")}:{os.environ.get("FR
 
 conn = psycopg2.connect(os.environ.get("DATABASE_URL"))
 
-@app.route("/ratings", methods=["GET", "POST"])
-def ratings():
-
+@app.route('/ratings', methods=["GET", "POST"])
+def ratings() -> tuple:
+    app.logger.info(request)
     if request.method == "GET":
         ret = {
             "bad": [],
@@ -23,7 +23,7 @@ def ratings():
         }
 
         id_user = request.args.get("user", "null")
-        if id_user == "null": return {"error": "Missing a valid 'user' parameter."}, 400
+        if id_user == "null": return ({"error": "Missing a valid 'user' parameter."}, 400)
         
         db = conn.cursor()
         db.execute("""
@@ -56,7 +56,7 @@ def ratings():
         for row in data:
             ret["good"].append(row[0])
 
-        return jsonify(ret), 200
+        return (jsonify(ret), 200)
     
     elif request.method == "POST":
         
@@ -89,7 +89,9 @@ def ratings():
             """, (id_user, id_track, i))
         conn.commit()
 
-        return jsonify({ "message": "Melody database ratings updated." }), 200
+        return (jsonify({ "message": "Melody database ratings updated." }), 200)
+
+    return (None, None)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5001)

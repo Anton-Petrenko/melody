@@ -1,6 +1,6 @@
 'use server'
 
-import { auth } from "@/auth";
+import { auth } from "@/authOLD";
 import { MelodySession } from "./SpotifyAPI";
 
 export default async function GetAuth(): Promise<MelodySession | null> {

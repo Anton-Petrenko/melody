@@ -5,7 +5,7 @@ import { spotifyAPI } from "@/lib/SpotifyAPI";
 import { RecentlyPlayedTracks } from "@/lib/SpotifyAPITypes";
 
 export default async function RatePageServer() {
-    
+
     const res = await spotifyAPI("https://api.spotify.com/v1/me/player/recently-played?limit=30");
     if (!res) {
         return (

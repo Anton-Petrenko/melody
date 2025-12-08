@@ -1,7 +1,8 @@
 "use client"
 
 import { Spinner } from "@heroui/react"
-import { useSession } from "next-auth/react"
+import { authClient } from "@/lib/auth-client"
+// import { useSession } from "next-auth/react"
 import { MelodySession } from "@/lib/SpotifyAPI"
 import { SpotifyTrack, TopTracks } from "@/lib/SpotifyAPITypes"
 import { useEffect, useRef, useState } from "react"
@@ -19,7 +20,8 @@ const LOAD_ORDER = [
 
 export default function RatePageScrolling() {
 
-    const session = useSession();
+    // const session = useSession();
+    const session = authClient.useSession()
 
     const spinner = useRef(null)
 
@@ -55,13 +57,17 @@ export default function RatePageScrolling() {
         }
 
         const load = async (page: number): Promise<TopTracks | null> => {
-            if (session.status != "authenticated") {
+            if (!session.data) {
                 console.warn("There was an error with authenticating the user to load more recommendations.")
                 return null
             }
+            const accessToken = await authClient.getAccessToken({
+                providerId: "spotify", // or any other provider id
+                userId: session.data.user.id
+            })
             const res = await fetch(LOAD_ORDER[page], {
                 headers: {
-                    'Authorization': `Bearer ${(session.data as MelodySession).token.access_token}`
+                    'Authorization': `Bearer ${accessToken.data?.accessToken}`
                 }
             });
             const data = await res.json()

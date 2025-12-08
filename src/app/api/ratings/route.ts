@@ -1,8 +1,15 @@
-import GetAuth from "@/lib/GetAuth";
+'use server'
+
+import { auth } from "@/auth"; // path to your Better Auth server instance
+import { headers } from "next/headers";
+
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
-    const session = await GetAuth()
+    const session = await auth.api.getSession({
+        headers: await headers() // you need to pass the headers object.
+    })
+
     if (!session) {
         console.warn("There was an issue fetching the session data before requesting the ratings.")
         return NextResponse.json({
@@ -12,7 +19,7 @@ export async function GET() {
         })
     }
 
-    if (session.token.spotify_id === undefined) {
+    if (session.session.userId === undefined) {
         console.warn("There was an issue fetching the session data before requesting the ratings. (Could not find user id in token)")
         return NextResponse.json({
             message: "There was an issue fetching the session data before requesting the ratings."
@@ -21,14 +28,16 @@ export async function GET() {
         })
     }
 
-    const res = await fetch(`http://${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}/ratings?user=${session.token.spotify_id}`)
+    const res = await fetch(`http://${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}/ratings?user=${session.session.userId}`)
     const data = await res.json()
     return NextResponse.json(data)
 }
 
 export async function POST(request: NextRequest) {
     const client_ratings = await request.json()
-    const session = await GetAuth()
+    const session = await auth.api.getSession({
+        headers: await headers() // you need to pass the headers object.
+    })
     if (!session) {
         console.warn("There was an issue fetching the session data before requesting the ratings.")
         return NextResponse.json({
@@ -38,7 +47,7 @@ export async function POST(request: NextRequest) {
         })
     }
 
-    if (session.token.spotify_id === undefined) {
+    if (session.session.userId === undefined) {
         console.warn("There was an issue fetching the session data before requesting the ratings. (Could not find user id in token)")
         return NextResponse.json({
             message: "There was an issue fetching the session data before requesting the ratings."
@@ -47,7 +56,7 @@ export async function POST(request: NextRequest) {
         })
     }
 
-    const res = await fetch(`http://${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}/ratings?user=${session.token.spotify_id}`,
+    const res = await fetch(`http://${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}/ratings?user=${session.session.userId}`,
         {
             method: "POST",
             headers: {

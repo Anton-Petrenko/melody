@@ -19,7 +19,7 @@ export default function HomeLayout({ children, }: Readonly<{ children: React.Rea
                 className={`${defaultFont.className} antialiased dark`}
             >
                 <NavigationBar>
-                    <SessionProvider>
+                    {/* <SessionProvider> */}
                         <AudioPlayerProvider>
                             <RaterProvider>
                                 <div className="sm:w-xl w-fit mx-auto my-2 px-2 sm:px-0">
@@ -27,7 +27,7 @@ export default function HomeLayout({ children, }: Readonly<{ children: React.Rea
                                 </div>
                             </RaterProvider>
                         </AudioPlayerProvider>
-                    </SessionProvider>
+                    {/* </SessionProvider> */}
                 </NavigationBar>
             </body>
         </html>
